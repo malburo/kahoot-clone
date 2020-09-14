@@ -12,19 +12,17 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   ...rest
 }) => {
   const token = localStorage.access_token;
+  if (!token) {
+    return <Redirect to={'/auth/login'} />;
+  }
   return (
     <Route
       {...rest}
-      render={props => {
-        if (!token) {
-          return <Redirect to={{ pathname: '/auth/login' }} />;
-        }
-        return (
-          <Layout>
-            <Component {...props} />
-          </Layout>
-        );
-      }}
+      render={props => (
+        <Layout>
+          <Component {...props} />
+        </Layout>
+      )}
     />
   );
 };
