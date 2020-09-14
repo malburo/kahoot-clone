@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import Text from '../Common/Text';
 
 function LoginForm() {
   const onFinish = (values: any) => {
@@ -16,7 +17,9 @@ function LoginForm() {
         remember: true,
       }}
       onFinish={onFinish}>
-      <p style={{ textAlign: 'center', margin: 10 }}>Login</p>
+      <Text textAlign="center" m={10}>
+        Login
+      </Text>
       <Form.Item
         name="username"
         rules={[

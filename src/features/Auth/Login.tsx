@@ -1,20 +1,19 @@
 import { Col, Row } from 'antd';
 import React from 'react';
+import Box from '../../components/Common/Box';
 import LoginForm from '../../components/Form/LoginForm';
 
 function Login() {
   return (
     <Row justify="center">
       <Col>
-        <div
-          style={{
-            marginTop: 100,
-            backgroundColor: 'white',
-            padding: '20px 30px',
-            maxWidth: 300,
-          }}>
+        <Box
+          p="20px 30px"
+          backgroundColor="#fff"
+          maxWidth={300}
+          marginTop={100}>
           <LoginForm />
-        </div>
+        </Box>
       </Col>
     </Row>
   );

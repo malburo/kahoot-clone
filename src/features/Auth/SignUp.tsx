@@ -1,18 +1,15 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import SignUpForm from '../../components/Form/SignUpForm';
+import Box from '../../components/Common/Box';
+
 function SignUp() {
   return (
     <Row justify="center">
       <Col>
-        <div
-          style={{
-            margin: '100px 0',
-            backgroundColor: 'white',
-            padding: '20px 60px',
-          }}>
+        <Box backgroundColor="#fff" m="100px 0" p="20px 60px">
           <SignUpForm />
-        </div>
+        </Box>
       </Col>
     </Row>
   );

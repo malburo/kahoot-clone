@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Text from '../Common/Text';
 
 const formItemLayout = {
   labelCol: {
@@ -36,12 +37,10 @@ function SignUpForm() {
       form={form}
       name="register"
       onFinish={onFinish}
-      initialValues={{
-        residence: ['zhejiang', 'hangzhou', 'xihu'],
-        prefix: '86',
-      }}
       scrollToFirstError>
-      <p style={{ textAlign: 'center' }}>Sign Up</p>
+      <Text textAlign="center" m={10}>
+        Sign Up
+      </Text>
       <Form.Item
         name="email"
         label="E-mail"
