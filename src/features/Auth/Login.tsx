@@ -1,7 +1,7 @@
+import Box from '@/components/Common/Box';
+import LoginForm from '@/components/Form/LoginForm';
 import { Col, Row } from 'antd';
 import React from 'react';
-import Box from '../../components/Common/Box';
-import LoginForm from '../../components/Form/LoginForm';
 
 function Login() {
   return (
