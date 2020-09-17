@@ -10,19 +10,15 @@ const PublicRoute: React.FC<PublicRouteProps> = ({
   component: Component,
   layout: Layout,
   ...rest
-}) => {
-  return (
-    <Route
-      {...rest}
-      render={props => {
-        return (
-          <Layout>
-            <Component {...props} />
-          </Layout>
-        );
-      }}
-    />
-  );
-};
+}) => (
+  <Route
+    {...rest}
+    render={props => (
+      <Layout>
+        <Component {...props} />
+      </Layout>
+    )}
+  />
+);
 
 export default PublicRoute;

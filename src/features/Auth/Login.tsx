@@ -11,7 +11,8 @@ function Login() {
           p="20px 30px"
           backgroundColor="#fff"
           maxWidth={300}
-          marginTop={100}>
+          marginTop={100}
+        >
           <LoginForm />
         </Box>
       </Col>

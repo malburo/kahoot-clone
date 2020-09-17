@@ -13,7 +13,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
 }) => {
   const token = localStorage.access_token;
   if (!token) {
-    return <Redirect to={'/auth/login'} />;
+    return <Redirect to="/auth/login" />;
   }
   return (
     <Route
