@@ -16,7 +16,8 @@ function LoginForm() {
       initialValues={{
         remember: true,
       }}
-      onFinish={onFinish}>
+      onFinish={onFinish}
+    >
       <Text textAlign="center" m={10}>
         Login
       </Text>
@@ -27,7 +28,8 @@ function LoginForm() {
             required: true,
             message: 'Please input your Username!',
           },
-        ]}>
+        ]}
+      >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
           placeholder="Username"
@@ -40,7 +42,8 @@ function LoginForm() {
             required: true,
             message: 'Please input your Password!',
           },
-        ]}>
+        ]}
+      >
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
@@ -59,7 +62,8 @@ function LoginForm() {
           type="primary"
           htmlType="submit"
           style={{ marginBottom: 10 }}
-          block>
+          block
+        >
           Log in
         </Button>
         Or <Link to="/auth/sign-up">register now!</Link>

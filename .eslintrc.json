@@ -1,0 +1,52 @@
+{
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "test": true,
+    "expect": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "no-use-before-define": 0,
+    "@typescript-eslint/no-use-before-define": 2,
+    "react/jsx-props-no-spreading": 0,
+    "comma-dangle": 0,
+    "import/no-unresolved": 0,
+    "react/prop-types": 0,
+    "no-unused-vars": 0,
+    "prefer-promise-reject-errors": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { "requireReturnForObjectLiteral": true }
+    ]
+  }
+}

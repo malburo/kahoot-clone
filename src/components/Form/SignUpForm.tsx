@@ -37,7 +37,8 @@ function SignUpForm() {
       form={form}
       name="register"
       onFinish={onFinish}
-      scrollToFirstError>
+      scrollToFirstError
+    >
       <Text textAlign="center" m={10}>
         Sign Up
       </Text>
@@ -53,7 +54,8 @@ function SignUpForm() {
             required: true,
             message: 'Please input your E-mail!',
           },
-        ]}>
+        ]}
+      >
         <Input />
       </Form.Item>
 
@@ -66,7 +68,8 @@ function SignUpForm() {
             message: 'Please input your password!',
           },
         ]}
-        hasFeedback>
+        hasFeedback
+      >
         <Input.Password />
       </Form.Item>
 
@@ -80,17 +83,20 @@ function SignUpForm() {
             required: true,
             message: 'Please confirm your password!',
           },
-          ({ getFieldValue }) => ({
-            validator(rule, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(
-                'The two passwords that you entered do not match!'
-              );
-            },
-          }),
-        ]}>
+          ({ getFieldValue }) => {
+            return {
+              validator(rule, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  'The two passwords that you entered do not match!',
+                );
+              },
+            };
+          },
+        ]}
+      >
         <Input.Password />
       </Form.Item>
 
