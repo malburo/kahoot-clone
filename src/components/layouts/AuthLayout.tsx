@@ -1,6 +1,7 @@
 import { Image, Layout } from 'antd';
 import React from 'react';
-import logo from '../../assets/images/logo.svg';
+import logo from '../../assets/images/logo-purple.svg';
+import Box from '../Common/Box';
 
 const { Header, Content } = Layout;
 interface AuthLayoutProps {
@@ -12,7 +13,9 @@ function AuthLayout({ children }: AuthLayoutProps) {
       <Header style={{ backgroundColor: 'white' }}>
         <Image src={logo} width={96} preview={false} />
       </Header>
-      <Content style={{ padding: '0 50px' }}>{children}</Content>
+      <Content>
+        <Box p="0 50px">{children}</Box>
+      </Content>
     </Layout>
   );
 }
