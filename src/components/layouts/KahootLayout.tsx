@@ -4,8 +4,7 @@ import {
   StarOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Button, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
+import { Avatar, Button, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo-white.png';
