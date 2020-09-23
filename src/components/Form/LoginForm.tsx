@@ -4,15 +4,19 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import Text from '../Common/Text';
 
-function LoginForm() {
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-  };
+export interface LoginFormValues {
+  username: string,
+  password: string,
+  remember: boolean
+}
+interface Props {
+  onFinish: (values: LoginFormValues) => void;
+}
 
+function LoginForm({ onFinish }: Props) {
   return (
     <Form
       name="normal_login"
-      className="login-form"
       initialValues={{
         remember: true,
       }}
@@ -31,7 +35,7 @@ function LoginForm() {
         ]}
       >
         <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
+          prefix={<UserOutlined />}
           placeholder="Username"
         />
       </Form.Item>
@@ -45,7 +49,7 @@ function LoginForm() {
         ]}
       >
         <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
+          prefix={<LockOutlined />}
           type="password"
           placeholder="Password"
         />
@@ -56,7 +60,6 @@ function LoginForm() {
         </Form.Item>
         <Link to="/auth/forgot-password">Forgot password</Link>
       </Form.Item>
-
       <Form.Item>
         <Button
           type="primary"
@@ -71,5 +74,4 @@ function LoginForm() {
     </Form>
   );
 }
-
 export default LoginForm;
