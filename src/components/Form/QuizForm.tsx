@@ -5,7 +5,10 @@ import React, { useState } from 'react';
 import Box from '../Common/Box';
 import QuizImageModal from '../Modal/QuizImageModal';
 
-const QuizForm = () => {
+interface Props {
+  id: string;
+}
+const QuizForm = ({ id }: Props) => {
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -30,7 +33,7 @@ const QuizForm = () => {
     console.log(values);
   };
   return (
-    <Form name="quiz-form" onFinish={onFinish}>
+    <Form name={`quiz-form-${id}`} onFinish={onFinish}>
       <QuizImageModal
         previewVisible={previewVisible}
         previewTitle={previewTitle}

@@ -3,6 +3,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Text from '../Common/Text';
 
+export interface RegisterFormValues {
+  username: string,
+  password: string,
+  confirmPassword: string
+}
+interface Props {
+  onFinish: (values: RegisterFormValues) => void;
+}
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -25,12 +34,9 @@ const tailFormItemLayout = {
     },
   },
 };
-function SignUpForm() {
+function RegisterForm({ onFinish }: Props) {
   const [form] = Form.useForm();
 
-  const onFinish = (values: object) => {
-    console.log('Received values of form: ', values);
-  };
   return (
     <Form
       {...formItemLayout}
@@ -43,16 +49,12 @@ function SignUpForm() {
         Sign Up
       </Text>
       <Form.Item
-        name="email"
-        label="E-mail"
+        name="username"
+        label="Username"
         rules={[
           {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
             required: true,
-            message: 'Please input your E-mail!',
+            message: 'Please input your username!',
           },
         ]}
       >
@@ -74,7 +76,7 @@ function SignUpForm() {
       </Form.Item>
 
       <Form.Item
-        name="confirm"
+        name="confirmPassword"
         label="Confirm Password"
         dependencies={['password']}
         hasFeedback
@@ -110,4 +112,4 @@ function SignUpForm() {
   );
 }
 
-export default SignUpForm;
+export default RegisterForm;

@@ -1,7 +1,7 @@
 import NotFound from '@/components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import MyKahoot from './MyKahoot';
+import MyKahoot from './pages/MyKahoot';
 
 function Kahoot() {
   const match = useRouteMatch();

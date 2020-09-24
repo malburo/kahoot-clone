@@ -1,15 +1,15 @@
 import NotFound from '@/components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Login from './Login';
-import SignUp from './SignUp';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function Auth() {
   const match = useRouteMatch();
   return (
     <Switch>
       <Route exact path={`${match.url}/login`} component={Login} />
-      <Route exact path={`${match.url}/sign-up`} component={SignUp} />
+      <Route exact path={`${match.url}/register`} component={Register} />
       <Route component={NotFound} />
     </Switch>
   );
