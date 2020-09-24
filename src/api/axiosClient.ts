@@ -8,6 +8,7 @@ const axiosClient = axios.create({
   },
   paramsSerializer: (params: any) => queryString.stringify(params),
 });
+
 axiosClient.interceptors.request.use(
   config => {
     const token = localStorage.getItem('access_token');
@@ -17,9 +18,10 @@ axiosClient.interceptors.request.use(
     return config;
   },
   error => {
-    return Promise.reject(error);
+    return Promise.reject(error.response || error.message);
   },
 );
+
 axiosClient.interceptors.response.use(
   response => {
     if (response && response.data) {
@@ -28,10 +30,10 @@ axiosClient.interceptors.response.use(
     return response;
   },
   error => {
-    if (error.response.status === 401) {
-      // store.dispatch(actions.logout());
-    }
-    return Promise.reject(error);
+    // if (error.response.status === 401) {
+    //   // store.dispatch(actions.logout());
+    // }
+    return Promise.reject(error.response || error.message);
   },
 );
 export default axiosClient;
