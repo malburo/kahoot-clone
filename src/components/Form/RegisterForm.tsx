@@ -1,12 +1,14 @@
-import { Button, Form, Input } from 'antd';
+import { RootState } from '@/app/store';
+import { Button, Form, Input, Spin } from 'antd';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Text from '../Common/Text';
 
 export interface RegisterFormValues {
-  username: string,
-  password: string,
-  confirmPassword: string
+  username: string;
+  password: string;
+  confirmPassword: string;
 }
 interface Props {
   onFinish: (values: RegisterFormValues) => void;
@@ -35,8 +37,9 @@ const tailFormItemLayout = {
   },
 };
 function RegisterForm({ onFinish }: Props) {
-  const [form] = Form.useForm();
+  const isFetching = useSelector<RootState>(state => state.user.isFetching);
 
+  const [form] = Form.useForm();
   return (
     <Form
       {...formItemLayout}
@@ -103,9 +106,15 @@ function RegisterForm({ onFinish }: Props) {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
-        </Button>{' '}
+        {isFetching ? (
+          <Button type="primary" htmlType="submit" disabled>
+            <Spin />
+          </Button>
+        ) : (
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        )}
         Or <Link to="/auth/login">login now!</Link>
       </Form.Item>
     </Form>

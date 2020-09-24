@@ -1,22 +1,29 @@
 import { AppDispatch } from '@/app/store';
 import { register } from '@/app/userSlice';
 import Box from '@/components/Common/Box';
-import RegisterForm, { RegisterFormValues } from '@/components/Form/RegisterForm';
-import { unwrapResult } from '@reduxjs/toolkit';
-import { Col, Row } from 'antd';
+import RegisterForm, {
+  RegisterFormValues,
+} from '@/components/Form/RegisterForm';
+import { Col, message, Row } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function Register() {
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
+  const history = useHistory();
+
   const handleSumit = async (values: RegisterFormValues) => {
-    try {
-      const registerResult = await dispatch(register(values));
-      unwrapResult(registerResult);
-    } catch (error) {
-      console.log(error)
+    const registerResult = await dispatch(register(values));
+    if (register.fulfilled.match(registerResult)) {
+      const { payload }: any = registerResult;
+      message.success(payload.message);
+      history.push('/kahoots/my-kahoot');
+    } else {
+      const { payload }: any = registerResult;
+      message.error(payload.message);
     }
-  }
+  };
   return (
     <Row justify="center">
       <Col>
