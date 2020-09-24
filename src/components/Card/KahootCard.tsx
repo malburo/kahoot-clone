@@ -1,16 +1,16 @@
+import { DeleteOutlined, EditOutlined, FormOutlined } from '@ant-design/icons';
 import { Button, Col, Dropdown, Image, Menu, Row } from 'antd';
 import React from 'react';
-import { DeleteOutlined, EditOutlined, FormOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 import Box from '../Common/Box';
 import Text from '../Common/Text';
-import { useHistory } from 'react-router-dom';
 
 function KahootCard() {
   const history = useHistory();
   const handleClick = (kahootId: string) => {
-    // do something
-    history.push('/rooms/roomId')
-  }
+    const roomId = '';
+    history.push(`/rooms/${roomId}`);
+  };
   return (
     <Box
       width="100%"
@@ -54,7 +54,9 @@ function KahootCard() {
           <Box bg="#f8f8f8" padding="10px 20px">
             <Row justify="end" align="bottom">
               <Box marginRight={20}>
-                <Button type="primary" onClick={() => handleClick("id")}>Play</Button>
+                <Button type="primary" onClick={() => handleClick('id')}>
+                  Play
+                </Button>
               </Box>
               <Box>
                 <Button>Edit</Button>
