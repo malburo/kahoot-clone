@@ -1,19 +1,22 @@
+import { RootState } from '@/app/store';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input, Spin } from 'antd';
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Text from '../Common/Text';
 
 export interface LoginFormValues {
-  username: string,
-  password: string,
-  remember: boolean
+  username: string;
+  password: string;
+  remember: boolean;
 }
 interface Props {
   onFinish: (values: LoginFormValues) => void;
 }
 
 function LoginForm({ onFinish }: Props) {
+  const isLogining = useSelector<RootState>(state => state.user.isLogining);
   return (
     <Form
       name="normal_login"
@@ -34,10 +37,7 @@ function LoginForm({ onFinish }: Props) {
           },
         ]}
       >
-        <Input
-          prefix={<UserOutlined />}
-          placeholder="Username"
-        />
+        <Input prefix={<UserOutlined />} placeholder="Username" />
       </Form.Item>
       <Form.Item
         name="password"
@@ -66,10 +66,11 @@ function LoginForm({ onFinish }: Props) {
           htmlType="submit"
           style={{ marginBottom: 10 }}
           block
+          loading={!!isLogining}
         >
-          Log in
+          Login
         </Button>
-        Or <Link to="/auth/sign-up">register now!</Link>
+        Or <Link to="/auth/register">register now!</Link>
       </Form.Item>
     </Form>
   );
