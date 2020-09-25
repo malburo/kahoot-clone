@@ -37,7 +37,9 @@ const tailFormItemLayout = {
   },
 };
 function RegisterForm({ onFinish }: Props) {
-  const isFetching = useSelector<RootState>(state => state.user.isFetching);
+  const isRegistering = useSelector<RootState>(
+    state => state.user.isRegistering,
+  );
 
   const [form] = Form.useForm();
   return (
@@ -106,15 +108,9 @@ function RegisterForm({ onFinish }: Props) {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        {isFetching ? (
-          <Button type="primary" htmlType="submit" disabled>
-            <Spin />
-          </Button>
-        ) : (
-          <Button type="primary" htmlType="submit">
-            Register
-          </Button>
-        )}
+        <Button type="primary" htmlType="submit" loading={!!isRegistering}>
+          Register
+        </Button>
         Or <Link to="/auth/login">login now!</Link>
       </Form.Item>
     </Form>

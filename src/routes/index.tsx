@@ -4,7 +4,7 @@ import CreatorLayout from '@/components/layouts/CreatorLayout';
 import KahootLayout from '@/components/layouts/KahootLayout';
 import NotFound from '@/components/NotFound';
 import Auth from '@/features/Auth';
-import Creator from '@/features/Creator/Creator';
+import Creator from '@/features/Kahoot/pages/Creator';
 import Kahoot from '@/features/Kahoot';
 import PlayGame from '@/features/PlayGame/PlayGame';
 import Room from '@/features/Room';
@@ -28,11 +28,7 @@ const RoutesComponent = () => (
           component={PlayGame}
           layout={BlankLayout}
         />
-        <PublicRoute
-          path="/rooms"
-          component={Room}
-          layout={BlankLayout}
-        />
+        <PublicRoute path="/rooms" component={Room} layout={BlankLayout} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

@@ -11,10 +11,10 @@ export interface RegisterResponse {
 }
 
 const authApi = {
-  getMe: async () => {
+  getMe: () => {
     return axiosClient.get('auth/me');
   },
-  login: async (payload: LoginFormValues): Promise<LoginResponse> => {
+  login: (payload: LoginFormValues): Promise<LoginResponse> => {
     return axiosClient.post('auth/login', payload);
   },
   register: (payload: RegisterFormValues): Promise<RegisterResponse> => {

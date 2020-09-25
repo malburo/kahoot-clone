@@ -16,7 +16,7 @@ interface Props {
 }
 
 function LoginForm({ onFinish }: Props) {
-  const isFetching = useSelector<RootState>(state => state.user.isFetching);
+  const isLogining = useSelector<RootState>(state => state.user.isLogining);
   return (
     <Form
       name="normal_login"
@@ -61,26 +61,15 @@ function LoginForm({ onFinish }: Props) {
         <Link to="/auth/forgot-password">Forgot password</Link>
       </Form.Item>
       <Form.Item>
-        {isFetching ? (
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{ marginBottom: 10 }}
-            block
-            disabled
-          >
-            <Spin />
-          </Button>
-        ) : (
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{ marginBottom: 10 }}
-            block
-          >
-            Login
-          </Button>
-        )}
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ marginBottom: 10 }}
+          block
+          loading={!!isLogining}
+        >
+          Login
+        </Button>
         Or <Link to="/auth/register">register now!</Link>
       </Form.Item>
     </Form>

@@ -43,6 +43,8 @@ const userSlice = createSlice({
   initialState: {
     current: {},
     isFetching: false,
+    isLogining: false,
+    isRegistering: false,
   },
   reducers: {
     logout: () => {
@@ -62,25 +64,25 @@ const userSlice = createSlice({
     });
 
     builder.addCase(login.pending, (state, action) => {
-      state.isFetching = true;
+      state.isLogining = true;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
       localStorage.setItem('access_token', payload.accessToken);
-      state.isFetching = false;
+      state.isLogining = false;
     });
     builder.addCase(login.rejected, (state, action) => {
-      state.isFetching = false;
+      state.isLogining = false;
     });
 
     builder.addCase(register.pending, (state, action) => {
-      state.isFetching = true;
+      state.isRegistering = true;
     });
     builder.addCase(register.fulfilled, (state, { payload }) => {
       localStorage.setItem('access_token', payload.accessToken);
-      state.isFetching = false;
+      state.isRegistering = false;
     });
     builder.addCase(register.rejected, (state, action) => {
-      state.isFetching = false;
+      state.isRegistering = false;
     });
   },
 });
