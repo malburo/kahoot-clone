@@ -1,6 +1,8 @@
 import getBase64 from '@/utils/image';
 import { Button, Col, Form, Input, Radio, Row, Upload } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
+import { UploadChangeParam } from 'antd/lib/upload';
+import { UploadFile } from 'antd/lib/upload/interface';
 import React, { useState } from 'react';
 import Box from '../Common/Box';
 import QuizImageModal from '../Modal/QuizImageModal';
@@ -9,23 +11,23 @@ interface Props {
   id: string;
 }
 const QuizForm = ({ id }: Props) => {
-  const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState<Array<UploadFile>>([]);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
+  const [previewImage, setPreviewImage] = useState<string>('');
   const [previewTitle, setPreviewTitle] = useState('');
 
-  const handlePreview = async (file: any) => {
+  const handlePreview = async (file: UploadFile<any>) => {
     const { name } = file;
     let { preview } = file;
     if (!preview) {
-      preview = await getBase64(file.originFileObj);
+      preview = await getBase64(file.originFileObj as Blob);
     }
-    setPreviewImage(preview);
+    setPreviewImage(preview as string);
     setPreviewVisible(true);
     setPreviewTitle(name);
   };
-  const handleChange = (props: any) => {
-    setFileList(props.fileList);
+  const handleChange = (info: UploadChangeParam) => {
+    setFileList(info.fileList);
   };
   const handleCancel = () => setPreviewVisible(false);
 

@@ -1,4 +1,4 @@
-const getBase64 = (file: any) =>
+const getBase64 = (file: Blob): any =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
