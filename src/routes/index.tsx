@@ -4,7 +4,7 @@ import CreatorLayout from '@/components/layouts/CreatorLayout';
 import KahootLayout from '@/components/layouts/KahootLayout';
 import NotFound from '@/components/NotFound';
 import Auth from '@/features/Auth';
-// import Creator from '@/features/Kahoot/pages/Creator';
+import Creator from '@/features/Creator/Creator';
 import Kahoot from '@/features/Kahoot';
 import PlayGame from '@/features/PlayGame/PlayGame';
 import Room from '@/features/Room';
@@ -18,11 +18,11 @@ const RoutesComponent = () => (
       <Switch>
         <PublicRoute path="/auth" component={Auth} layout={AuthLayout} />
         <PublicRoute path="/kahoots" component={Kahoot} layout={KahootLayout} />
-        {/* <PublicRoute
+        <PublicRoute
           path="/creator"
           component={Creator}
           layout={CreatorLayout}
-        /> */}
+        />
         <PublicRoute
           path="/play-game"
           component={PlayGame}
