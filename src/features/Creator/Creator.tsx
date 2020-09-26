@@ -8,8 +8,8 @@ function Creator() {
   const [activeKey, setActiveKey] = useState('1');
   const [keys, setKeys] = useState(['1']);
 
-  const onChange = (key: any) => {
-    setActiveKey(key);
+  const onChange = (activeKey: string) => {
+    setActiveKey(activeKey);
   };
   const add = () => {
     let key = parseInt(keys[keys.length - 1]);
@@ -20,7 +20,7 @@ function Creator() {
     setKeys(newKeys);
     setActiveKey(activeKeyString);
   };
-  const remove = (targetKey: any) => {
+  const remove = (targetKey: string) => {
     let newActiveKey = activeKey;
     let lastIndex = 0;
     keys.forEach((key, i) => {
@@ -40,7 +40,7 @@ function Creator() {
     setKeys(newKeys);
     setActiveKey(newActiveKey);
   };
-  const onEdit = (a: any, b: any) => {
+  const onEdit = (a: any, b: string) => {
     if (b === 'add') {
       add();
     } else {

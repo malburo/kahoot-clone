@@ -1,4 +1,4 @@
-import authApi from '@/api/authApi';
+import authApi, { LoginResponse, RegisterResponse } from '@/api/authApi';
 import { LoginFormValues } from '@/components/Form/LoginForm';
 import { RegisterFormValues } from '@/components/Form/RegisterForm';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
@@ -66,10 +66,13 @@ const userSlice = createSlice({
     builder.addCase(login.pending, (state, action) => {
       state.isLogining = true;
     });
-    builder.addCase(login.fulfilled, (state, { payload }) => {
-      localStorage.setItem('access_token', payload.accessToken);
-      state.isLogining = false;
-    });
+    builder.addCase(
+      login.fulfilled,
+      (state, { payload }: { payload: LoginResponse }) => {
+        localStorage.setItem('access_token', payload.accessToken);
+        state.isLogining = false;
+      },
+    );
     builder.addCase(login.rejected, (state, action) => {
       state.isLogining = false;
     });
@@ -77,10 +80,13 @@ const userSlice = createSlice({
     builder.addCase(register.pending, (state, action) => {
       state.isRegistering = true;
     });
-    builder.addCase(register.fulfilled, (state, { payload }) => {
-      localStorage.setItem('access_token', payload.accessToken);
-      state.isRegistering = false;
-    });
+    builder.addCase(
+      register.fulfilled,
+      (state, { payload }: { payload: RegisterResponse }) => {
+        localStorage.setItem('access_token', payload.accessToken);
+        state.isRegistering = false;
+      },
+    );
     builder.addCase(register.rejected, (state, action) => {
       state.isRegistering = false;
     });
