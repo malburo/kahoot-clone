@@ -1,8 +1,10 @@
+import user from '@/features/Auth/userSlice';
+import kahoot from '@/features/Kahoot/kahootSlice';
 import { configureStore } from '@reduxjs/toolkit';
-import user from './userSlice';
 
 const rootReducer = {
   user,
+  kahoot,
 };
 
 const store = configureStore({
