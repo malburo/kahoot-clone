@@ -6,6 +6,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: Open-Sans, Helvetica, Sans-Serif;
   }
+  .ant-layout-sider-children {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 `;
 
 export default GlobalStyle;

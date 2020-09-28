@@ -3,7 +3,7 @@ import Text from '@/components/Common/Text';
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Col, Image, Row } from 'antd';
 import React from 'react';
-import logo from '../../../assets/images/logo-white.png';
+import logo from '../../assets/images/logo-white.png';
 
 function Lobby() {
   return (
