@@ -1,6 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import { AppDispatch } from '@/app/store';
 import { KahootFormValues } from '@/components/Form/KahootForm';
 import { createKahoot } from '@/features/Kahoot/kahootSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Modal } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,11 +18,11 @@ function NewKahootModal(props: any) {
     setVisible(true);
   };
 
-  const handleSubmit = (values: KahootFormValues) => {
+  const handleSubmit = async (values: KahootFormValues) => {
     setVisible(false);
-    const newKahoot = dispatch(createKahoot(values));
-    console.log(newKahoot);
-    // history.push('/kahoots/kahootId/questions');
+    const kahootResponse = await dispatch(createKahoot(values));
+    const kahoot = unwrapResult(kahootResponse);
+    history.push(`/kahoots/${kahoot._id}`);
   };
   return (
     <>

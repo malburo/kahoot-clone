@@ -1,15 +1,22 @@
-import { DeleteOutlined, EditOutlined, FormOutlined } from '@ant-design/icons';
+import DeleteKahootModal from '@/components/Modal/DeleteKahootModal';
+import { DeleteOutlined, FormOutlined } from '@ant-design/icons';
 import { Button, Col, Dropdown, Image, Menu, Row } from 'antd';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Box from '../Common/Box';
-import Text from '../Common/Text';
 
-function KahootCard() {
+interface Props {
+  title: string;
+  kahootId: string;
+}
+function KahootCard({ title, kahootId }: Props) {
   const history = useHistory();
-  const handleClick = (kahootId: string) => {
-    const roomId = '';
+  const handlePlay = (kahootId: string) => {
+    const roomId = '123';
     history.push(`/rooms/${roomId}`);
+  };
+  const handleEdit = (kahootId: string) => {
+    history.push(`/kahoots/${kahootId}`);
   };
   return (
     <Box
@@ -29,7 +36,7 @@ function KahootCard() {
           <Box height={60} m={20}>
             <Row justify="space-between">
               <Col>
-                <Text>Title</Text>
+                <Link to={`/kahoots/${kahootId}`}>{title}</Link>
               </Col>
               <Col>
                 <Dropdown.Button
@@ -39,11 +46,10 @@ function KahootCard() {
                       <Menu.Item key="1" icon={<FormOutlined />}>
                         Rename
                       </Menu.Item>
-                      <Menu.Item key="2" icon={<EditOutlined />}>
-                        Edit
-                      </Menu.Item>
-                      <Menu.Item key="3" icon={<DeleteOutlined />}>
-                        Delete
+                      <Menu.Item key="2" icon={<DeleteOutlined />}>
+                        <DeleteKahootModal kahootId={kahootId}>
+                          Delete
+                        </DeleteKahootModal>
                       </Menu.Item>
                     </Menu>
                   }
@@ -54,12 +60,12 @@ function KahootCard() {
           <Box bg="#f8f8f8" padding="10px 20px">
             <Row justify="end" align="bottom">
               <Box marginRight={20}>
-                <Button type="primary" onClick={() => handleClick('id')}>
+                <Button type="primary" onClick={() => handlePlay(kahootId)}>
                   Play
                 </Button>
               </Box>
               <Box>
-                <Button>Edit</Button>
+                <Button onClick={() => handleEdit(kahootId)}>Edit</Button>
               </Box>
             </Row>
           </Box>

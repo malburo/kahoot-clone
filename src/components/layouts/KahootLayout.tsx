@@ -1,16 +1,14 @@
 import {
   LogoutOutlined,
   SettingOutlined,
-  StarOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Avatar, Button, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
+import { Avatar, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo-white.png';
 import Box from '../Common/Box';
 
-const { Header, Content, Sider } = Layout;
+const { Header } = Layout;
 
 interface KahootLayoutProps {
   children: React.ReactNode;
@@ -18,7 +16,7 @@ interface KahootLayoutProps {
 function KahootLayout({ children }: KahootLayoutProps) {
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ backgroundColor: '#4c3e8e' }}>
+      <Header style={{ backgroundColor: '#4c3e8e', height: '8vh' }}>
         <Row justify="space-between">
           <Col span={20}>
             <Image
@@ -34,11 +32,6 @@ function KahootLayout({ children }: KahootLayoutProps) {
           </Col>
           <Col>
             <Row align="middle">
-              <Box marginRight={20}>
-                <Link to="/creator">
-                  <Button>Create</Button>
-                </Link>
-              </Box>
               <Box>
                 <Dropdown
                   placement="bottomRight"
@@ -62,29 +55,7 @@ function KahootLayout({ children }: KahootLayoutProps) {
           </Col>
         </Row>
       </Header>
-      <Layout>
-        <Sider width={200}>
-          <Menu mode="inline" style={{ height: '100%', borderRight: 0 }}>
-            <Menu.Item
-              key="1"
-              icon={<UserOutlined />}
-              style={{ marginTop: '20px' }}
-            >
-              My kahoots
-            </Menu.Item>
-            <Menu.Item key="2" icon={<StarOutlined />}>
-              Favorites
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout>
-          <Content>
-            <Box p={24} minHeight={280}>
-              {children}
-            </Box>
-          </Content>
-        </Layout>
-      </Layout>
+      {children}
     </Layout>
   );
 }

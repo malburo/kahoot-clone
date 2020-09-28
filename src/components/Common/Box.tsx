@@ -6,12 +6,15 @@ import {
   ColorProps,
   layout,
   LayoutProps,
+  shadow,
+  ShadowProps,
 } from 'styled-system';
 
-const Box = styled.div<SpaceProps & ColorProps & LayoutProps>`
+const Box = styled.div<SpaceProps & ColorProps & LayoutProps & ShadowProps>`
   ${space}
   ${color}
   ${layout}
+  ${shadow}
 `;
 
 export default Box;
