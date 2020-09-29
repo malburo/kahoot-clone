@@ -11,8 +11,8 @@ import { getKahoots } from './kahootSlice';
 function MyKahoot() {
   const dispatch = useDispatch<AppDispatch>();
   const kahoot = useSelector((state: RootState) => state.kahoot);
-  const { kahoots } = kahoot;
-  const kahootList = kahoots.map(kahoot => {
+  const { items } = kahoot;
+  const kahootList = items.map(kahoot => {
     const { title, _id } = kahoot;
     return <KahootCard title={title} kahootId={_id} />;
   });

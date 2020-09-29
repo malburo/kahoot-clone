@@ -37,11 +37,11 @@ export const deleteKahoot = createAsyncThunk(
   },
 );
 interface typeInitState {
-  kahoots: kahootType[];
+  items: kahootType[];
   isFetching: boolean;
 }
 const initialState: typeInitState = {
-  kahoots: [],
+  items: [],
   isFetching: false,
 };
 const kahootSlice = createSlice({
@@ -56,7 +56,7 @@ const kahootSlice = createSlice({
       getKahoots.fulfilled,
       (state, { payload }: { payload: kahootType[] }) => {
         state.isFetching = false;
-        state.kahoots = payload;
+        state.items = payload;
       },
     );
     builder.addCase(getKahoots.rejected, (state, action) => {
@@ -70,7 +70,7 @@ const kahootSlice = createSlice({
       createKahoot.fulfilled,
       (state, { payload }: { payload: kahootType }) => {
         state.isFetching = false;
-        state.kahoots.push(payload);
+        state.items.push(payload);
       },
     );
     builder.addCase(createKahoot.rejected, (state, action) => {
@@ -83,10 +83,10 @@ const kahootSlice = createSlice({
     builder.addCase(
       deleteKahoot.fulfilled,
       (state, { payload }: { payload: kahootType }) => {
-        const index = state.kahoots.findIndex(
+        const index = state.items.findIndex(
           kahoot => kahoot._id === payload._id,
         );
-        state.kahoots.splice(index, 1);
+        state.items.splice(index, 1);
         state.isFetching = false;
       },
     );
