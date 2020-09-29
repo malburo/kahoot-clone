@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const {
   override,
   fixBabelImports,
@@ -17,5 +18,5 @@ module.exports = override(
       '@primary-color': '#4c3e8e',
     },
   }),
-  useBabelRc()
+  useBabelRc(),
 );

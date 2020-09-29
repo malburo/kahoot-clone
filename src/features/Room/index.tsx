@@ -1,7 +1,7 @@
 import NotFound from '@/components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Lobby from './pages/Lobby';
+import Lobby from './Lobby';
 
 function Room() {
   const match = useRouteMatch();

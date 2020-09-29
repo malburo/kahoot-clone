@@ -1,6 +1,6 @@
 import { RootState } from '@/app/store';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Spin } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
