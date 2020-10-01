@@ -1,3 +1,5 @@
+import { AppDispatch } from '@/app/store';
+import { logout } from '@/features/Auth/userSlice';
 import {
   LogoutOutlined,
   SettingOutlined,
@@ -5,6 +7,8 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import logo from '../../assets/images/logo-white.png';
 import Box from '../Common/Box';
 
@@ -14,6 +18,12 @@ interface KahootLayoutProps {
   children: React.ReactNode;
 }
 function KahootLayout({ children }: KahootLayoutProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const history = useHistory();
+  const handleLogout = () => {
+    dispatch(logout());
+    history.replace('/auth/login');
+  };
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header style={{ backgroundColor: '#4c3e8e', height: '8vh' }}>
@@ -41,7 +51,11 @@ function KahootLayout({ children }: KahootLayoutProps) {
                         Setting
                       </Menu.Item>
                       <Menu.Divider />
-                      <Menu.Item key="2" icon={<LogoutOutlined />}>
+                      <Menu.Item
+                        key="2"
+                        icon={<LogoutOutlined />}
+                        onClick={handleLogout}
+                      >
                         Logout
                       </Menu.Item>
                     </Menu>

@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import store from '@/app/store';
+import { logout } from '@/features/Auth/userSlice';
 import axios from 'axios';
 import queryString from 'query-string';
 

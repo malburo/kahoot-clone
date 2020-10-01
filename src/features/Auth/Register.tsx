@@ -1,5 +1,4 @@
 import { AppDispatch } from '@/app/store';
-import { register } from '@/app/userSlice';
 import Box from '@/components/Common/Box';
 import RegisterForm, {
   RegisterFormValues,
@@ -7,18 +6,16 @@ import RegisterForm, {
 import { Col, message, Row } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { register } from './userSlice';
 
 function Register() {
   const dispatch = useDispatch<AppDispatch>();
-  const history = useHistory();
 
   const handleSumit = async (values: RegisterFormValues) => {
     const registerResult = await dispatch(register(values));
     if (register.fulfilled.match(registerResult)) {
       const { payload }: any = registerResult;
       message.success(payload.message);
-      history.push('/kahoots/my-kahoot');
     } else {
       const { payload }: any = registerResult;
       message.error(payload.message);

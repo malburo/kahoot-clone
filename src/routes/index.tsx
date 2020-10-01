@@ -8,6 +8,7 @@ import PlayGame from '@/features/PlayGame/PlayGame';
 import Room from '@/features/Room';
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 const RoutesComponent = () => (
@@ -15,13 +16,13 @@ const RoutesComponent = () => (
     <Suspense fallback={Auth}>
       <Switch>
         <PublicRoute path="/auth" component={Auth} layout={AuthLayout} />
-        <PublicRoute path="/kahoots" component={Kahoot} layout={KahootLayout} />
-        <PublicRoute
-          path="/play-game"
-          component={PlayGame}
-          layout={BlankLayout}
+        <PrivateRoute
+          path="/kahoots"
+          component={Kahoot}
+          layout={KahootLayout}
         />
-        <PublicRoute path="/rooms" component={Room} layout={BlankLayout} />
+        <PrivateRoute path="/rooms" component={Room} layout={BlankLayout} />
+        <PublicRoute path="/" component={PlayGame} layout={BlankLayout} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

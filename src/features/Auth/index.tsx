@@ -1,10 +1,12 @@
 import NotFound from '@/components/NotFound';
+import useAuth from '@/hooks/useAuth';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './Login';
+import Register from './Register';
 
 function Auth() {
+  useAuth();
   const match = useRouteMatch();
   return (
     <Switch>

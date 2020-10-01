@@ -1,4 +1,6 @@
+import { RootState } from '@/app/store';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 interface PrivateRouteProps extends RouteProps {
@@ -11,8 +13,8 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   layout: Layout,
   ...rest
 }) => {
-  const token = localStorage.access_token;
-  if (!token) {
+  const isAuth = useSelector((state: RootState) => state.user.isAuth);
+  if (!isAuth) {
     return <Redirect to="/auth/login" />;
   }
   return (
