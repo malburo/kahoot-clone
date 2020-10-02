@@ -9,7 +9,6 @@ import Text from '../Common/Text';
 export interface LoginFormValues {
   username: string;
   password: string;
-  remember: boolean;
 }
 interface Props {
   onFinish: (values: LoginFormValues) => void;
@@ -55,7 +54,7 @@ function LoginForm({ onFinish }: Props) {
         />
       </Form.Item>
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
+        <Form.Item valuePropName="checked" noStyle>
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
         <Link to="/auth/forgot-password">Forgot password</Link>
