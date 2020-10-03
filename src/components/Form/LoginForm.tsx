@@ -9,7 +9,6 @@ import Text from '../Common/Text';
 export interface LoginFormValues {
   username: string;
   password: string;
-  remember: boolean;
 }
 interface Props {
   onFinish: (values: LoginFormValues) => void;
@@ -18,13 +17,7 @@ interface Props {
 function LoginForm({ onFinish }: Props) {
   const isLogining = useSelector<RootState>(state => state.user.isLogining);
   return (
-    <Form
-      name="normal_login"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-    >
+    <Form name="normal_login" onFinish={onFinish}>
       <Text textAlign="center" m={10}>
         Login
       </Text>
@@ -55,7 +48,7 @@ function LoginForm({ onFinish }: Props) {
         />
       </Form.Item>
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
+        <Form.Item noStyle>
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
         <Link to="/auth/forgot-password">Forgot password</Link>

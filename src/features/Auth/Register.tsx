@@ -3,7 +3,7 @@ import Box from '@/components/Common/Box';
 import RegisterForm, {
   RegisterFormValues,
 } from '@/components/Form/RegisterForm';
-import { Col, message, Row } from 'antd';
+import { Col, message, notification, Row } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from './userSlice';
@@ -15,10 +15,14 @@ function Register() {
     const registerResult = await dispatch(register(values));
     if (register.fulfilled.match(registerResult)) {
       const { payload }: any = registerResult;
-      message.success(payload.message);
+      notification.success({
+        message: payload.message,
+      });
     } else {
       const { payload }: any = registerResult;
-      message.error(payload.message);
+      notification.error({
+        message: payload.message || payload.error,
+      });
     }
   };
   return (

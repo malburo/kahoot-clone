@@ -1,7 +1,7 @@
 import { AppDispatch } from '@/app/store';
 import Box from '@/components/Common/Box';
 import LoginForm, { LoginFormValues } from '@/components/Form/LoginForm';
-import { Col, message, Row } from 'antd';
+import { Col, message, notification, Row } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from './userSlice';
@@ -13,10 +13,14 @@ function Login() {
     const loginResult = await dispatch(login(values));
     if (login.fulfilled.match(loginResult)) {
       const { payload }: any = loginResult;
-      message.success(payload.message);
+      notification.success({
+        message: payload.message,
+      });
     } else {
       const { payload }: any = loginResult;
-      message.error(payload.message);
+      notification.error({
+        message: payload.message || payload.error,
+      });
     }
   };
   return (
