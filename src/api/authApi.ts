@@ -4,9 +4,11 @@ import { RegisterFormValues } from '@/components/Form/RegisterForm';
 import axiosClient from './axiosClient';
 
 export interface LoginResponse {
+  message: string;
   accessToken: string;
 }
 export interface RegisterResponse {
+  message: string;
   accessToken: string;
 }
 
