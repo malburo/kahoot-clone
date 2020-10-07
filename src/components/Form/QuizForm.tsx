@@ -1,52 +1,54 @@
-import getBase64 from '@/utils/image';
-import { Button, Col, Form, Input, Radio, Row, Upload } from 'antd';
+/* eslint-disable no-param-reassign */
+import { questionType } from '@/api/questionApi';
+import uploadApi from '@/api/uploadApi';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Input, Radio, Row, Slider, Upload } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import { UploadChangeParam } from 'antd/lib/upload';
-import { UploadFile } from 'antd/lib/upload/interface';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '../Common/Box';
-import QuizImageModal from '../Modal/QuizImageModal';
 
 interface Props {
-  id: string;
+  initialValues: questionType;
+  onSave: (values: questionType) => void;
 }
-const QuizForm = ({ id }: Props) => {
-  const [fileList, setFileList] = useState<Array<UploadFile>>([]);
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string>('');
-  const [previewTitle, setPreviewTitle] = useState('');
 
-  const handlePreview = async (file: UploadFile<any>) => {
-    const { name } = file;
-    let { preview } = file;
-    if (!preview) {
-      preview = await getBase64(file.originFileObj as Blob);
-    }
-    setPreviewImage(preview as string);
-    setPreviewVisible(true);
-    setPreviewTitle(name);
-  };
-  const handleChange = (info: UploadChangeParam) => {
-    setFileList(info.fileList);
-  };
-  const handleCancel = () => setPreviewVisible(false);
+const QuizForm = ({ initialValues, onSave }: Props) => {
+  const { _id } = initialValues;
+  const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+  useEffect(() => {
+    form.setFieldsValue({
+      ...initialValues,
+    });
+    setImageUrl(initialValues.image);
+  }, [initialValues, form]);
 
-  const onFinish = (values: any) => {
-    console.log(values);
+  const handleChange = async (info: any) => {
+    const formData = new FormData();
+    formData.append('image', info.file);
+    setLoading(true);
+    const uploadResponse = await uploadApi.uploadImage(formData);
+    setLoading(false);
+    setImageUrl(uploadResponse.url);
   };
+  const handeSave = (questionUpdated: questionType) => {
+    questionUpdated.image = imageUrl;
+    onSave(questionUpdated);
+  };
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
   return (
-    <Form name={`quiz-form-${id}`} onFinish={onFinish}>
-      <QuizImageModal
-        previewVisible={previewVisible}
-        previewTitle={previewTitle}
-        handleCancel={handleCancel}
-        previewImage={previewImage}
-      />
+    <Form name={`quiz-form-${_id}`} onFinish={handeSave} form={form}>
       <Row justify="space-between" align="middle">
         <Col span={18}>
           <Box>
-            <Form.Item name="question">
-              <Input placeholder="Question...?" size="large" />
+            <Form.Item name="content">
+              <Input size="large" placeholder="Question?" />
             </Form.Item>
           </Box>
         </Col>
@@ -54,26 +56,32 @@ const QuizForm = ({ id }: Props) => {
           <Box marginY={20}>
             <Form.Item name="image">
               <Upload
-                name="avatar"
+                name="image"
                 listType="picture-card"
-                className="avatar-uploader"
-                fileList={fileList}
+                showUploadList={false}
                 beforeUpload={() => false}
-                onPreview={handlePreview}
                 onChange={handleChange}
               >
-                {fileList.length >= 1 ? null : 'Upload'}
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt="question"
+                    style={{ width: '100%' }}
+                  />
+                ) : (
+                  uploadButton
+                )}
               </Upload>
             </Form.Item>
           </Box>
         </Col>
       </Row>
-      <Form.Item name="correct-answer">
+      <Form.Item name="correctAnswer">
         <Radio.Group style={{ display: 'block' }}>
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answer', 'A']} style={{ margin: 0 }}>
+                <Form.Item name={['answers', 'A']} style={{ margin: 0 }}>
                   <TextArea placeholder="Answer A" autoSize bordered={false} />
                 </Form.Item>
               </Col>
@@ -85,7 +93,7 @@ const QuizForm = ({ id }: Props) => {
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answer', 'B']} style={{ margin: 0 }}>
+                <Form.Item name={['answers', 'B']} style={{ margin: 0 }}>
                   <TextArea placeholder="Answer B" autoSize bordered={false} />
                 </Form.Item>
               </Col>
@@ -97,7 +105,7 @@ const QuizForm = ({ id }: Props) => {
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answer', 'C']} style={{ margin: 0 }}>
+                <Form.Item name={['answers', 'C']} style={{ margin: 0 }}>
                   <TextArea placeholder="Answer C" autoSize bordered={false} />
                 </Form.Item>
               </Col>
@@ -109,7 +117,7 @@ const QuizForm = ({ id }: Props) => {
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answer', 'D']} style={{ margin: 0 }}>
+                <Form.Item name={['answers', 'D']} style={{ margin: 0 }}>
                   <TextArea placeholder="Answer D" autoSize bordered={false} />
                 </Form.Item>
               </Col>
@@ -119,6 +127,34 @@ const QuizForm = ({ id }: Props) => {
             </Row>
           </Box>
         </Radio.Group>
+      </Form.Item>
+      <Form.Item name="points" label="Points ">
+        <Slider
+          min={0}
+          max={2000}
+          step={1000}
+          marks={{
+            0: '0',
+            1000: '1000',
+            2000: '2000',
+          }}
+        />
+      </Form.Item>
+      <Form.Item name="timeLimit" label="Time limits ">
+        <Slider
+          min={0}
+          max={120}
+          step={20}
+          marks={{
+            0: '0',
+            20: '20',
+            40: '40',
+            60: '60',
+            80: '80',
+            100: '100',
+            120: '120',
+          }}
+        />
       </Form.Item>
       <Form.Item>
         <Box marginTop={20}>
