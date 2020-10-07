@@ -1,27 +1,19 @@
-import { AppDispatch, RootState } from '@/app/store';
+import { RootState } from '@/app/store';
 import KahootCard from '@/components/Card/KahootCard';
 import Box from '@/components/Common/Box';
 import NewKahootModal from '@/components/Modal/NewKahootModal';
 import { Col, Empty, Row } from 'antd';
 import Search from 'antd/lib/input/Search';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getKahoots } from './kahootSlice';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 function MyKahoot() {
-  const dispatch = useDispatch<AppDispatch>();
   const kahoot = useSelector((state: RootState) => state.kahoot);
   const { items } = kahoot;
   const kahootList = items.map(kahoot => {
     const { title, _id } = kahoot;
-    return <KahootCard title={title} kahootId={_id} />;
+    return <KahootCard title={title} kahootId={_id} key={_id} />;
   });
-  useEffect(() => {
-    async function fetchKahootList() {
-      dispatch(getKahoots());
-    }
-    fetchKahootList();
-  }, [dispatch]);
   return (
     <Box m={100}>
       <Box marginY={50}>
