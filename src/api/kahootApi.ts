@@ -12,9 +12,11 @@ export interface getKahootResponse {
   data: kahootType[];
 }
 export interface createKahootResponse {
+  message: string;
   data: kahootType;
 }
 export interface deleteKahootResponse {
+  message: string;
   data: kahootType;
 }
 const kahootApi = {

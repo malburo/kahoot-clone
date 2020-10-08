@@ -3,6 +3,7 @@ import { getKahootResponse } from '@/api/kahootApi';
 import { LoginFormValues } from '@/components/Form/LoginForm';
 import { RegisterFormValues } from '@/components/Form/RegisterForm';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { notification } from 'antd';
 
 export const getMe = createAsyncThunk(
   'user/getMe',
@@ -21,8 +22,14 @@ export const login = createAsyncThunk(
   async (payload: LoginFormValues, thunkAPI) => {
     try {
       const response = await authApi.login(payload);
+      notification.success({
+        message: response.message,
+      });
       return response;
     } catch (error) {
+      notification.error({
+        message: error.data.message,
+      });
       return thunkAPI.rejectWithValue(error.data);
     }
   },
@@ -32,8 +39,14 @@ export const register = createAsyncThunk(
   async (payload: RegisterFormValues, thunkAPI) => {
     try {
       const response = await authApi.register(payload);
+      notification.success({
+        message: response.message,
+      });
       return response;
     } catch (error) {
+      notification.error({
+        message: error.data.message,
+      });
       return thunkAPI.rejectWithValue(error.data);
     }
   },
