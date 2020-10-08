@@ -2,17 +2,24 @@
 /* eslint-disable arrow-body-style */
 import axiosClient from './axiosClient';
 
-export interface questionType {
+interface AnswersType {
+  A: string;
+  B: string;
+  C: string;
+  D: string;
+}
+
+export interface QuestionType {
   _id: string;
   content: string;
   image: any;
-  answers: { A: string; B: string; C: string; D: string };
+  answers: AnswersType;
   correctAnswer: string;
   timeLimit: number;
   points: number;
 }
 export interface getQuestionResponse {
-  data: questionType[];
+  data: QuestionType[];
 }
 const questionApi = {
   getAll: (kahootId: string): Promise<getQuestionResponse> => {
@@ -20,7 +27,7 @@ const questionApi = {
   },
   createQuestion: (payload: {
     kahootId: string;
-    newQuestion: questionType;
+    newQuestion: QuestionType;
   }) => {
     const { kahootId, newQuestion } = payload;
     return axiosClient.post(`kahoots/${kahootId}/questions`, newQuestion);
@@ -28,7 +35,7 @@ const questionApi = {
   updateQuestion: (payload: {
     kahootId: string;
     questionId: string;
-    newQuestion: questionType;
+    newQuestion: QuestionType;
   }) => {
     const { kahootId, newQuestion, questionId } = payload;
     return axiosClient.put(

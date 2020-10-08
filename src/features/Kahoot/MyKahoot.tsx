@@ -8,9 +8,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 function MyKahoot() {
-  const kahoot = useSelector((state: RootState) => state.kahoot);
-  const { items } = kahoot;
-  const kahootList = items.map(kahoot => {
+  const kahoots = useSelector((state: RootState) => state.kahoot.items);
+  const kahootList = kahoots.map(kahoot => {
     const { title, _id } = kahoot;
     return <KahootCard title={title} kahootId={_id} key={_id} />;
   });

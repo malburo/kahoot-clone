@@ -1,11 +1,11 @@
 /* eslint-disable arrow-body-style */
 import { KahootFormValues } from '@/components/Form/KahootForm';
 import axiosClient from './axiosClient';
-import { questionType } from './questionApi';
+import { QuestionType } from './questionApi';
 
 export interface kahootType {
   _id: string;
-  questions: questionType[];
+  questions: QuestionType[];
   title: string;
 }
 export interface getKahootResponse {

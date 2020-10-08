@@ -1,8 +1,20 @@
+/* eslint-disable no-undef */
 import { Modal } from 'antd';
 import React, { useState } from 'react';
 
-function DeleteQuestionModal(props: any) {
-  const { children, kahootId, questionId, onDelele } = props;
+interface Props {
+  children: any;
+  kahootId: string;
+  questionId: string;
+  onDelele: (kahootId: string, questionId: string) => void;
+}
+
+function DeleteQuestionModal({
+  children,
+  kahootId,
+  questionId,
+  onDelele,
+}: Props) {
   const [visible, setVisible] = useState(false);
 
   const handleOk = (kahootId: string, questionId: string) => {

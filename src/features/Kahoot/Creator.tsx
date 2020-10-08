@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
-import { questionType } from '@/api/questionApi';
+import { QuestionType } from '@/api/questionApi';
 import { AppDispatch, RootState } from '@/app/store';
 import Box from '@/components/Common/Box';
 import QuizForm from '@/components/Form/QuizForm';
@@ -23,8 +23,8 @@ function Creator() {
   const kahoots = useSelector((state: RootState) => state.kahoot.items);
   const dispatch = useDispatch<AppDispatch>();
   const { kahootId } = useParams<{ kahootId: string }>();
-  const [questions, setQuestions] = useState<questionType[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState<questionType>({
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const [currentQuestion, setCurrentQuestion] = useState<QuestionType>({
     _id: '0',
     content: '',
     image: '',
@@ -68,7 +68,7 @@ function Creator() {
     setQuestions([...questions, newQuestion]);
     setCurrentQuestion(newQuestion);
   };
-  const handleSave = async (questionUpdated: questionType) => {
+  const handleSave = async (questionUpdated: QuestionType) => {
     const updatedQuestionResponse = await dispatch(
       updateQuestions({
         kahootId,

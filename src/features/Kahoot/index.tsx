@@ -12,10 +12,7 @@ function Kahoot() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    async function fetchKahootList() {
-      dispatch(getKahoots());
-    }
-    fetchKahootList();
+    dispatch(getKahoots());
   }, [dispatch]);
   return (
     <Switch>

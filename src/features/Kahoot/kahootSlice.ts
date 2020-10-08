@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import kahootApi, { kahootType } from '@/api/kahootApi';
-import questionApi, { questionType } from '@/api/questionApi';
+import questionApi, { QuestionType } from '@/api/questionApi';
 import { KahootFormValues } from '@/components/Form/KahootForm';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
@@ -133,7 +133,7 @@ const kahootSlice = createSlice({
     });
     builder.addCase(
       createQuestions.fulfilled,
-      (state, { payload }: { payload: questionType[] }) => {
+      (state, { payload }: { payload: QuestionType[] }) => {
         state.isFetching = false;
       },
     );
@@ -146,7 +146,7 @@ const kahootSlice = createSlice({
     });
     builder.addCase(
       updateQuestions.fulfilled,
-      (state, { payload }: { payload: questionType[] }) => {
+      (state, { payload }: { payload: QuestionType[] }) => {
         state.isFetching = false;
       },
     );
@@ -158,7 +158,7 @@ const kahootSlice = createSlice({
       });
       builder.addCase(
         deleteQuestions.fulfilled,
-        (state, { payload }: { payload: questionType[] }) => {
+        (state, { payload }: { payload: QuestionType[] }) => {
           state.isFetching = false;
         },
       );

@@ -1,15 +1,16 @@
 /* eslint-disable no-param-reassign */
-import { questionType } from '@/api/questionApi';
+import { QuestionType } from '@/api/questionApi';
 import uploadApi from '@/api/uploadApi';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Radio, Row, Slider, Upload } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
+import { UploadChangeParam } from 'antd/lib/upload';
 import React, { useEffect, useState } from 'react';
 import Box from '../Common/Box';
 
 interface Props {
-  initialValues: questionType;
-  onSave: (values: questionType) => void;
+  initialValues: QuestionType;
+  onSave: (values: QuestionType) => void;
 }
 
 const QuizForm = ({ initialValues, onSave }: Props) => {
@@ -24,7 +25,7 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
     setImageUrl(initialValues.image);
   }, [initialValues, form]);
 
-  const handleChange = async (info: any) => {
+  const handleChange = async (info: UploadChangeParam<any>) => {
     const formData = new FormData();
     formData.append('image', info.file);
     setLoading(true);
@@ -32,7 +33,7 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
     setLoading(false);
     setImageUrl(uploadResponse.url);
   };
-  const handeSave = (questionUpdated: questionType) => {
+  const handeSave = (questionUpdated: QuestionType) => {
     questionUpdated.image = imageUrl;
     onSave(questionUpdated);
   };

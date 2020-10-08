@@ -1,12 +1,12 @@
 /* eslint-disable arrow-body-style */
 import axiosClient from './axiosClient';
 
-interface uploadImageResponse {
+interface UploadImageResponse {
   url: string;
   message: string;
 }
 const uploadApi = {
-  uploadImage: async (payload: any): Promise<uploadImageResponse> => {
+  uploadImage: async (payload: any): Promise<UploadImageResponse> => {
     return axiosClient.post('image', payload);
   },
 };
