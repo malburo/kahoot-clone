@@ -1,4 +1,4 @@
-import { AppDispatch } from '@/app/store';
+import store from '@/app/store';
 import { logout } from '@/features/Auth/userSlice';
 import {
   LogoutOutlined,
@@ -7,7 +7,6 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import logo from '../../assets/images/logo-white.png';
 import Box from '../Common/Box';
@@ -18,10 +17,9 @@ interface KahootLayoutProps {
   children: React.ReactNode;
 }
 function KahootLayout({ children }: KahootLayoutProps) {
-  const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
   const handleLogout = () => {
-    dispatch(logout());
+    store.dispatch(logout());
     history.replace('/auth/login');
   };
   return (

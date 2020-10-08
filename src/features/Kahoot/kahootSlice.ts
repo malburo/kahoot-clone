@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import kahootApi, { kahootType } from '@/api/kahootApi';
+import questionApi, { QuestionType } from '@/api/questionApi';
 import { KahootFormValues } from '@/components/Form/KahootForm';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { notification } from 'antd';
@@ -50,6 +51,39 @@ export const deleteKahoot = createAsyncThunk(
     }
   },
 );
+export const createQuestions = createAsyncThunk(
+  'kahoot/createQuestions',
+  async (payload: any, thunkAPI) => {
+    try {
+      const newQuestion = await questionApi.createQuestion(payload);
+      return newQuestion.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  },
+);
+export const updateQuestions = createAsyncThunk(
+  'kahoot/updateQuestions',
+  async (payload: any, thunkAPI) => {
+    try {
+      const newQuestion = await questionApi.updateQuestion(payload);
+      return newQuestion.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  },
+);
+export const deleteQuestions = createAsyncThunk(
+  'kahoot/deleteQuestions',
+  async (payload: any, thunkAPI) => {
+    try {
+      const newQuestion = await questionApi.deleteQuestion(payload);
+      return newQuestion.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.data);
+    }
+  },
+);
 interface typeInitState {
   items: kahootType[];
   isFetching: boolean;
@@ -63,7 +97,7 @@ const kahootSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(getKahoots.pending, (state, action) => {
+    builder.addCase(getKahoots.pending, state => {
       state.isFetching = true;
     });
     builder.addCase(
@@ -73,11 +107,11 @@ const kahootSlice = createSlice({
         state.items = payload;
       },
     );
-    builder.addCase(getKahoots.rejected, (state, action) => {
+    builder.addCase(getKahoots.rejected, state => {
       state.isFetching = false;
     });
 
-    builder.addCase(createKahoot.pending, (state, action) => {
+    builder.addCase(createKahoot.pending, state => {
       state.isFetching = true;
     });
     builder.addCase(
@@ -87,11 +121,11 @@ const kahootSlice = createSlice({
         state.items.push(payload);
       },
     );
-    builder.addCase(createKahoot.rejected, (state, action) => {
+    builder.addCase(createKahoot.rejected, state => {
       state.isFetching = false;
     });
 
-    builder.addCase(deleteKahoot.pending, (state, action) => {
+    builder.addCase(deleteKahoot.pending, state => {
       state.isFetching = true;
     });
     builder.addCase(
@@ -104,8 +138,47 @@ const kahootSlice = createSlice({
         state.isFetching = false;
       },
     );
-    builder.addCase(deleteKahoot.rejected, (state, action) => {
+    builder.addCase(deleteKahoot.rejected, state => {
       state.isFetching = false;
+    });
+
+    builder.addCase(createQuestions.pending, state => {
+      state.isFetching = true;
+    });
+    builder.addCase(
+      createQuestions.fulfilled,
+      (state, { payload }: { payload: QuestionType[] }) => {
+        state.isFetching = false;
+      },
+    );
+    builder.addCase(createQuestions.rejected, state => {
+      state.isFetching = false;
+    });
+
+    builder.addCase(updateQuestions.pending, state => {
+      state.isFetching = true;
+    });
+    builder.addCase(
+      updateQuestions.fulfilled,
+      (state, { payload }: { payload: QuestionType[] }) => {
+        state.isFetching = false;
+      },
+    );
+    builder.addCase(updateQuestions.rejected, state => {
+      state.isFetching = false;
+
+      builder.addCase(deleteQuestions.pending, state => {
+        state.isFetching = true;
+      });
+      builder.addCase(
+        deleteQuestions.fulfilled,
+        (state, { payload }: { payload: QuestionType[] }) => {
+          state.isFetching = false;
+        },
+      );
+      builder.addCase(deleteQuestions.rejected, state => {
+        state.isFetching = false;
+      });
     });
   },
 });

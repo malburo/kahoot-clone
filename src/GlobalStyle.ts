@@ -10,6 +10,9 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     overflow-y: auto;
   }
+  .ant-upload{
+    overflow: hidden;
+  }
 `;
 
 export default GlobalStyle;
