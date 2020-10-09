@@ -31,7 +31,10 @@ function DeleteQuestionModal({
       <Modal
         title="Delete kahoot"
         visible={visible}
-        onOk={e => handleOk(kahootId, questionId)}
+        onOk={e => {
+          e.stopPropagation();
+          handleOk(kahootId, questionId);
+        }}
         onCancel={handleCancel}
       >
         Do you want to delete this question?

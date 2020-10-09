@@ -12,18 +12,21 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-  createQuestions,
-  deleteQuestions,
-  updateQuestions,
-} from './kahootSlice';
+  createQuestion,
+  deleteQuestion,
+  getKahoot,
+  updateQuestion,
+} from './slice/kahoot';
 
 const { Content, Sider } = Layout;
 
 function Creator() {
-  const kahoots = useSelector((state: RootState) => state.kahoot.items);
   const dispatch = useDispatch<AppDispatch>();
+
+  const questions = useSelector(
+    (state: RootState) => state.kahoot.item.questions,
+  );
   const { kahootId } = useParams<{ kahootId: string }>();
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<QuestionType>({
     _id: '0',
     content: '',
@@ -33,15 +36,16 @@ function Creator() {
     timeLimit: 0,
     points: 0,
   });
+
   useEffect(() => {
-    const kahoot = kahoots.find(kahoot => kahoot._id === kahootId);
-    if (kahoot) {
-      setQuestions(kahoot.questions);
-      if (kahoot.questions[0]) {
-        setCurrentQuestion(kahoot.questions[0]);
-      }
+    dispatch(getKahoot(kahootId));
+  }, [dispatch, kahootId]);
+
+  useEffect(() => {
+    if (questions[0]) {
+      setCurrentQuestion(questions[0]);
     }
-  }, [kahoots, kahootId]);
+  }, [questions]);
 
   const handleClick = (questionId: string) => {
     const currentQuestion = questions.find(
@@ -52,7 +56,7 @@ function Creator() {
 
   const handleAdd = async (kahootId: string) => {
     const newQuestionResponse = await dispatch(
-      createQuestions({
+      createQuestion({
         kahootId,
         newQuestion: {
           content: '',
@@ -65,51 +69,33 @@ function Creator() {
       }),
     );
     const newQuestion = unwrapResult(newQuestionResponse);
-    setQuestions([...questions, newQuestion]);
     setCurrentQuestion(newQuestion);
   };
   const handleSave = async (questionUpdated: QuestionType) => {
     const updatedQuestionResponse = await dispatch(
-      updateQuestions({
+      updateQuestion({
         kahootId,
         newQuestion: questionUpdated,
         questionId: currentQuestion._id,
       }),
     );
     const updatedQuestion = unwrapResult(updatedQuestionResponse);
-    const questionsClone = [...questions];
-    const index = questionsClone.findIndex(
-      question => question._id === currentQuestion._id,
-    );
-    questionsClone[index] = updatedQuestion;
-    setQuestions(questionsClone);
     setCurrentQuestion(updatedQuestion);
   };
   const handleDelete = (kahootId: string, questionId: string) => {
-    dispatch(deleteQuestions({ kahootId, questionId }));
-    const questionsClone = [...questions];
-    const index = questionsClone.findIndex(
-      question => question._id === currentQuestion._id,
-    );
-    questionsClone.splice(index, 1);
-    if (questions.length > 1) {
-      setCurrentQuestion(questions[questions.length - 2]);
-    }
-    setQuestions(questionsClone);
+    dispatch(deleteQuestion({ kahootId, questionId }));
   };
   const questionList = questions.map((question, index) => (
-    <React.Fragment key={question._id}>
-      <Menu.Item key={question._id} onClick={() => handleClick(question._id)}>
-        Question {index + 1}
-      </Menu.Item>
+    <Menu.Item key={question._id} onClick={() => handleClick(question._id)}>
+      Question {index + 1}
       <DeleteQuestionModal
         kahootId={kahootId}
         questionId={question._id}
         onDelele={handleDelete}
       >
-        <DeleteOutlined />
+        <DeleteOutlined style={{ marginLeft: 60 }} />
       </DeleteQuestionModal>
-    </React.Fragment>
+    </Menu.Item>
   ));
   return (
     <Layout>
