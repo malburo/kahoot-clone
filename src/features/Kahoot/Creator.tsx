@@ -55,7 +55,7 @@ function Creator() {
   };
 
   const handleAdd = async (kahootId: string) => {
-    const newQuestionResponse = await dispatch(
+    const newQuestion = await dispatch(
       createQuestion({
         kahootId,
         newQuestion: {
@@ -67,19 +67,17 @@ function Creator() {
           points: 0,
         },
       }),
-    );
-    const newQuestion = unwrapResult(newQuestionResponse);
+    ).then(unwrapResult);
     setCurrentQuestion(newQuestion);
   };
   const handleSave = async (questionUpdated: QuestionType) => {
-    const updatedQuestionResponse = await dispatch(
+    const updatedQuestion = await dispatch(
       updateQuestion({
         kahootId,
         newQuestion: questionUpdated,
         questionId: currentQuestion._id,
       }),
-    );
-    const updatedQuestion = unwrapResult(updatedQuestionResponse);
+    ).then(unwrapResult);
     setCurrentQuestion(updatedQuestion);
   };
   const handleDelete = (kahootId: string, questionId: string) => {
