@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { AppDispatch } from '@/app/store';
 import { KahootFormValues } from '@/components/Form/KahootForm';
-import { createKahoot } from '@/features/Kahoot/kahootSlice';
+import { createKahoot } from '@/features/Kahoot/slice/kahoots';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Modal } from 'antd';
 import React, { useState } from 'react';
