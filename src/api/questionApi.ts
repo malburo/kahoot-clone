@@ -12,7 +12,7 @@ interface AnswersType {
 export interface QuestionType {
   _id: string;
   content: string;
-  image: any;
+  image: string;
   answers: AnswersType;
   correctAnswer: string;
   timeLimit: number;

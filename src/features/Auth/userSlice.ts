@@ -105,6 +105,7 @@ const userSlice = createSlice({
       (state, { payload }: { payload: RegisterResponse }) => {
         localStorage.setItem('access-token', payload.accessToken);
         state.isRegistering = false;
+        state.isAuth = true;
       },
     );
     builder.addCase(register.rejected, state => {
