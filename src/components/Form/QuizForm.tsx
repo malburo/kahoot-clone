@@ -2,10 +2,21 @@
 import { QuestionType } from '@/api/questionApi';
 import uploadApi from '@/api/uploadApi';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Radio, Row, Slider, Upload } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Slider,
+  Upload,
+  Alert,
+} from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { UploadChangeParam } from 'antd/lib/upload';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Box from '../Common/Box';
 
 interface Props {
@@ -14,10 +25,14 @@ interface Props {
 }
 
 const QuizForm = ({ initialValues, onSave }: Props) => {
+  const history = useHistory();
+
   const { _id } = initialValues;
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const [messages, setMessages] = useState<string[]>([]);
+
   useEffect(() => {
     form.setFieldsValue({
       ...initialValues,
@@ -26,16 +41,45 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
   }, [initialValues, form]);
 
   const handleChange = async (info: UploadChangeParam<any>) => {
-    const formData = new FormData();
-    formData.append('image', info.file);
-    setLoading(true);
-    const uploadResponse = await uploadApi.uploadImage(formData);
-    setLoading(false);
-    setImageUrl(uploadResponse.url);
+    try {
+      const formData = new FormData();
+      formData.append('image', info.file);
+      setLoading(true);
+      const uploadResponse = await uploadApi.uploadImage(formData);
+      setLoading(false);
+      setImageUrl(uploadResponse.url);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
-  const handeSave = (questionUpdated: QuestionType) => {
+  const handleSave = (questionUpdated: QuestionType) => {
+    console.log(questionUpdated);
+    const messErrors: string[] = [];
     questionUpdated.image = imageUrl;
-    onSave(questionUpdated);
+    // Remove space in front of content
+    questionUpdated.content = questionUpdated.content.trim();
+    // Check content and correctAnswer
+    if (!questionUpdated.correctAnswer) {
+      messErrors.push('Choose the correct answer !');
+    }
+    if (
+      !questionUpdated.answers.A ||
+      !questionUpdated.answers.B ||
+      !questionUpdated.answers.C ||
+      !questionUpdated.answers.D
+    ) {
+      messErrors.push('Enter full of answers !');
+    }
+
+    if (messErrors.length === 0) {
+      onSave(questionUpdated);
+    } else {
+      console.log(messErrors);
+      setMessages(messErrors);
+    }
+  };
+  const handleExit = () => {
+    history.push('/kahoots');
   };
   const uploadButton = (
     <div>
@@ -44,11 +88,20 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
     </div>
   );
   return (
-    <Form name={`quiz-form-${_id}`} onFinish={handeSave} form={form}>
+    <Form name={`quiz-form-${_id}`} onFinish={handleSave} form={form}>
       <Row justify="space-between" align="middle">
         <Col span={18}>
           <Box>
-            <Form.Item name="content">
+            <Form.Item
+              style={{ margin: '5px' }}
+              name="content"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input question!',
+                },
+              ]}
+            >
               <Input size="large" placeholder="Question?" />
             </Form.Item>
           </Box>
@@ -77,6 +130,12 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
           </Box>
         </Col>
       </Row>
+
+      {messages.length !== 0 &&
+        messages.map((message: string) => (
+          <Alert message={message} type="error" style={{ margin: '5px 0' }} />
+        ))}
+
       <Form.Item name="correctAnswer">
         <Radio.Group style={{ display: 'block' }}>
           <Box bg="white" p={20} mt={20}>
@@ -159,8 +218,41 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
       </Form.Item>
       <Form.Item>
         <Box marginTop={20}>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{
+              width: '96px',
+              height: '42px',
+              margin: '10px',
+              padding: '4px 16px 4px',
+              borderRadius: '4px',
+              fontWeight: 'bold',
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.4)',
+            }}
+          >
             Save
+          </Button>
+          <Button
+            style={{
+              // Display & Box Model
+              width: '96px',
+              height: '42px',
+              margin: '10px',
+              padding: '4px 16px 4px',
+              outline: 'none',
+              border: '1px solid #fff',
+              borderRadius: '4px',
+              // Text
+              fontWeight: 'bold',
+              // Color
+              color: '#fff',
+              background: '#46178F',
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.4)',
+            }}
+            onClick={handleExit}
+          >
+            Exit
           </Button>
         </Box>
       </Form.Item>

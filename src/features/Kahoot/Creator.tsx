@@ -30,7 +30,7 @@ function Creator() {
     image: '',
     answers: { A: '', B: '', C: '', D: '' },
     correctAnswer: '',
-    timeLimit: 0,
+    timeLimit: 20,
     points: 0,
   });
   useEffect(() => {
@@ -51,39 +51,47 @@ function Creator() {
   };
 
   const handleAdd = async (kahootId: string) => {
-    const newQuestionResponse = await dispatch(
-      createQuestions({
-        kahootId,
-        newQuestion: {
-          content: '',
-          image: '',
-          answers: { A: '', B: '', C: '', D: '' },
-          correctAnswer: '',
-          timeLimit: 0,
-          points: 0,
-        },
-      }),
-    );
-    const newQuestion = unwrapResult(newQuestionResponse);
-    setQuestions([...questions, newQuestion]);
-    setCurrentQuestion(newQuestion);
+    try {
+      const newQuestionResponse = await dispatch(
+        createQuestions({
+          kahootId,
+          newQuestion: {
+            content: '',
+            image: '',
+            answers: { A: '', B: '', C: '', D: '' },
+            correctAnswer: '',
+            timeLimit: 20,
+            points: 0,
+          },
+        }),
+      );
+      const newQuestion = unwrapResult(newQuestionResponse);
+      setQuestions([...questions, newQuestion]);
+      setCurrentQuestion(newQuestion);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   const handleSave = async (questionUpdated: QuestionType) => {
-    const updatedQuestionResponse = await dispatch(
-      updateQuestions({
-        kahootId,
-        newQuestion: questionUpdated,
-        questionId: currentQuestion._id,
-      }),
-    );
-    const updatedQuestion = unwrapResult(updatedQuestionResponse);
-    const questionsClone = [...questions];
-    const index = questionsClone.findIndex(
-      question => question._id === currentQuestion._id,
-    );
-    questionsClone[index] = updatedQuestion;
-    setQuestions(questionsClone);
-    setCurrentQuestion(updatedQuestion);
+    try {
+      const updatedQuestionResponse = await dispatch(
+        updateQuestions({
+          kahootId,
+          newQuestion: questionUpdated,
+          questionId: currentQuestion._id,
+        }),
+      );
+      const updatedQuestion = unwrapResult(updatedQuestionResponse);
+      const questionsClone = [...questions];
+      const index = questionsClone.findIndex(
+        question => question._id === currentQuestion._id,
+      );
+      questionsClone[index] = updatedQuestion;
+      setQuestions(questionsClone);
+      setCurrentQuestion(updatedQuestion);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   const handleDelete = (kahootId: string, questionId: string) => {
     dispatch(deleteQuestions({ kahootId, questionId }));
@@ -99,16 +107,29 @@ function Creator() {
   };
   const questionList = questions.map((question, index) => (
     <React.Fragment key={question._id}>
-      <Menu.Item key={question._id} onClick={() => handleClick(question._id)}>
-        Question {index + 1}
-      </Menu.Item>
-      <DeleteQuestionModal
-        kahootId={kahootId}
-        questionId={question._id}
-        onDelele={handleDelete}
+      <div
+        style={{
+          width: '100%',
+          height: '2em',
+          padding: '3px',
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          borderBottom: '1px solid #fafafa',
+          fontSize: '18px',
+        }}
       >
-        <DeleteOutlined />
-      </DeleteQuestionModal>
+        <Menu.Item key={question._id} onClick={() => handleClick(question._id)}>
+          Question {index + 1}
+        </Menu.Item>
+        <DeleteQuestionModal
+          kahootId={kahootId}
+          questionId={question._id}
+          onDelele={handleDelete}
+        >
+          <DeleteOutlined />
+        </DeleteQuestionModal>
+      </div>
     </React.Fragment>
   ));
   return (

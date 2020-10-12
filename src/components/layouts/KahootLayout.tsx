@@ -5,7 +5,7 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Avatar, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
+import { Avatar, Col, Dropdown, Image, Layout, Menu, Row, Button } from 'antd';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import logo from '../../assets/images/logo-white.png';
@@ -24,7 +24,7 @@ function KahootLayout({ children }: KahootLayoutProps) {
   };
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ backgroundColor: '#4c3e8e', height: '8vh' }}>
+      <Header style={{ backgroundColor: '#4c3e8e', height: '10%' }}>
         <Row justify="space-between">
           <Col span={20}>
             <Image
