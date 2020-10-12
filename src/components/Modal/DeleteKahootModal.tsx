@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { AppDispatch } from '@/app/store';
-import { deleteKahoot } from '@/features/Kahoot/kahootSlice';
+import { deleteKahoot } from '@/features/Kahoot/slice/kahoots';
 import { Modal } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
