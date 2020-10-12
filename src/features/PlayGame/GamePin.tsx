@@ -3,7 +3,7 @@ import GamePinForm from '@/components/Form/GamePinForm';
 import { Col, Row } from 'antd';
 import React from 'react';
 
-function PlayGame() {
+function GamePin() {
   return (
     <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>
       <Col>
@@ -15,4 +15,4 @@ function PlayGame() {
   );
 }
 
-export default PlayGame;
+export default GamePin;
