@@ -2,27 +2,34 @@
 import { QuestionType } from '@/api/questionApi';
 import uploadApi from '@/api/uploadApi';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Slider,
-  Upload,
-  Alert,
-} from 'antd';
+import { Col, Form, Input, Radio, Row, Slider, Upload, Alert } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import { UploadChangeParam } from 'antd/lib/upload';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import Box from '../Common/Box';
 
 interface Props {
   initialValues: QuestionType;
   onSave: (values: QuestionType) => void;
 }
+const Button = styled.button`
+  /*Display & Box Model*/
+  width: 96px;
+  height: 42px;
+  margin: 10px;
+  padding: 4px 16px 4px;
+  outline: none;
+  border: 1px solid #fff;
+  borderradius: 4px;
+  /*Text*/
+  fontweight: bold;
+  /*Color*/
+  color: #fff;
+  background: #46178f;
+  boxshadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+`;
 
 const QuizForm = ({ initialValues, onSave }: Props) => {
   const history = useHistory();
@@ -53,7 +60,6 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
     }
   };
   const handleSave = (questionUpdated: QuestionType) => {
-    console.log(questionUpdated);
     const messErrors: string[] = [];
     questionUpdated.image = imageUrl;
     // Remove space in front of content
@@ -74,7 +80,6 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
     if (messErrors.length === 0) {
       onSave(questionUpdated);
     } else {
-      console.log(messErrors);
       setMessages(messErrors);
     }
   };
@@ -131,10 +136,9 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
         </Col>
       </Row>
 
-      {messages.length !== 0 &&
-        messages.map((message: string) => (
-          <Alert message={message} type="error" style={{ margin: '5px 0' }} />
-        ))}
+      {messages?.map((message: string) => (
+        <Alert message={message} type="error" style={{ margin: '5px 0' }} />
+      ))}
 
       <Form.Item name="correctAnswer">
         <Radio.Group style={{ display: 'block' }}>
@@ -218,42 +222,8 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
       </Form.Item>
       <Form.Item>
         <Box marginTop={20}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{
-              width: '96px',
-              height: '42px',
-              margin: '10px',
-              padding: '4px 16px 4px',
-              borderRadius: '4px',
-              fontWeight: 'bold',
-              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.4)',
-            }}
-          >
-            Save
-          </Button>
-          <Button
-            style={{
-              // Display & Box Model
-              width: '96px',
-              height: '42px',
-              margin: '10px',
-              padding: '4px 16px 4px',
-              outline: 'none',
-              border: '1px solid #fff',
-              borderRadius: '4px',
-              // Text
-              fontWeight: 'bold',
-              // Color
-              color: '#fff',
-              background: '#46178F',
-              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.4)',
-            }}
-            onClick={handleExit}
-          >
-            Exit
-          </Button>
+          <Button type="submit">Save</Button>
+          <Button onClick={handleExit}>Exit</Button>
         </Box>
       </Form.Item>
     </Form>

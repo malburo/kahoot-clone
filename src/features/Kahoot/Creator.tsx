@@ -2,7 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 import { QuestionType } from '@/api/questionApi';
 import { AppDispatch, RootState } from '@/app/store';
-import Box from '@/components/Common/Box';
+// import Box from '@/components/Common/Box';
 import QuizForm from '@/components/Form/QuizForm';
 import DeleteQuestionModal from '@/components/Modal/DeleteQuestionModal';
 import { DeleteOutlined } from '@ant-design/icons';
@@ -11,6 +11,8 @@ import { Button, Col, Empty, Layout, Menu, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+
 import {
   createQuestion,
   deleteQuestion,
@@ -19,7 +21,16 @@ import {
 } from './slice/kahoot';
 
 const { Content, Sider } = Layout;
-
+const Box = styled('div')({
+  width: '100%',
+  height: '2em',
+  padding: '3px',
+  display: 'flex',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  borderBottom: '1px solid #fafafa',
+  fontSize: '18px',
+});
 function Creator() {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -93,18 +104,7 @@ function Creator() {
   };
   const questionList = questions.map((question, index) => (
     <React.Fragment key={question._id}>
-      <div
-        style={{
-          width: '100%',
-          height: '2em',
-          padding: '3px',
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          borderBottom: '1px solid #fafafa',
-          fontSize: '18px',
-        }}
-      >
+      <Box>
         <Menu.Item key={question._id} onClick={() => handleClick(question._id)}>
           Question {index + 1}
         </Menu.Item>
@@ -115,7 +115,7 @@ function Creator() {
         >
           <DeleteOutlined />
         </DeleteQuestionModal>
-      </div>
+      </Box>
     </React.Fragment>
   ));
   return (
@@ -129,7 +129,7 @@ function Creator() {
         >
           {questionList}
           {questions.length > 0 && (
-            <Box ml={40} my={30}>
+            <Box style={{ margin: '30px 0px' }}>
               <Button type="primary" onClick={() => handleAdd(kahootId)}>
                 Add question
               </Button>
