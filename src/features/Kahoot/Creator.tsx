@@ -12,18 +12,21 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-  createQuestions,
-  deleteQuestions,
-  updateQuestions,
-} from './kahootSlice';
+  createQuestion,
+  deleteQuestion,
+  getKahoot,
+  updateQuestion,
+} from './slice/kahoot';
 
 const { Content, Sider } = Layout;
 
 function Creator() {
-  const kahoots = useSelector((state: RootState) => state.kahoot.items);
   const dispatch = useDispatch<AppDispatch>();
+
+  const questions = useSelector(
+    (state: RootState) => state.kahoot.item.questions,
+  );
   const { kahootId } = useParams<{ kahootId: string }>();
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<QuestionType>({
     _id: '0',
     content: '',
@@ -33,15 +36,16 @@ function Creator() {
     timeLimit: 20,
     points: 0,
   });
+
   useEffect(() => {
-    const kahoot = kahoots.find(kahoot => kahoot._id === kahootId);
-    if (kahoot) {
-      setQuestions(kahoot.questions);
-      if (kahoot.questions[0]) {
-        setCurrentQuestion(kahoot.questions[0]);
-      }
+    dispatch(getKahoot(kahootId));
+  }, [dispatch, kahootId]);
+
+  useEffect(() => {
+    if (questions[0]) {
+      setCurrentQuestion(questions[0]);
     }
-  }, [kahoots, kahootId]);
+  }, [questions]);
 
   const handleClick = (questionId: string) => {
     const currentQuestion = questions.find(
@@ -52,21 +56,19 @@ function Creator() {
 
   const handleAdd = async (kahootId: string) => {
     try {
-      const newQuestionResponse = await dispatch(
-        createQuestions({
+      const newQuestion = await dispatch(
+        createQuestion({
           kahootId,
           newQuestion: {
             content: '',
             image: '',
             answers: { A: '', B: '', C: '', D: '' },
             correctAnswer: '',
-            timeLimit: 20,
+            timeLimit: 0,
             points: 0,
           },
         }),
-      );
-      const newQuestion = unwrapResult(newQuestionResponse);
-      setQuestions([...questions, newQuestion]);
+      ).then(unwrapResult);
       setCurrentQuestion(newQuestion);
     } catch (error) {
       console.log(error.message);
@@ -74,36 +76,20 @@ function Creator() {
   };
   const handleSave = async (questionUpdated: QuestionType) => {
     try {
-      const updatedQuestionResponse = await dispatch(
-        updateQuestions({
+      const updatedQuestion = await dispatch(
+        updateQuestion({
           kahootId,
           newQuestion: questionUpdated,
           questionId: currentQuestion._id,
         }),
-      );
-      const updatedQuestion = unwrapResult(updatedQuestionResponse);
-      const questionsClone = [...questions];
-      const index = questionsClone.findIndex(
-        question => question._id === currentQuestion._id,
-      );
-      questionsClone[index] = updatedQuestion;
-      setQuestions(questionsClone);
+      ).then(unwrapResult);
       setCurrentQuestion(updatedQuestion);
     } catch (error) {
       console.log(error.message);
     }
   };
   const handleDelete = (kahootId: string, questionId: string) => {
-    dispatch(deleteQuestions({ kahootId, questionId }));
-    const questionsClone = [...questions];
-    const index = questionsClone.findIndex(
-      question => question._id === currentQuestion._id,
-    );
-    questionsClone.splice(index, 1);
-    if (questions.length > 1) {
-      setCurrentQuestion(questions[questions.length - 2]);
-    }
-    setQuestions(questionsClone);
+    dispatch(deleteQuestion({ kahootId, questionId }));
   };
   const questionList = questions.map((question, index) => (
     <React.Fragment key={question._id}>
