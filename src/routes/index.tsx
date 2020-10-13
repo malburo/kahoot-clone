@@ -4,7 +4,7 @@ import KahootLayout from '@/components/layouts/KahootLayout';
 import NotFound from '@/components/NotFound';
 import Auth from '@/features/Auth';
 import Kahoot from '@/features/Kahoot';
-import PlayGame from '@/features/PlayGame/PlayGame';
+import PlayGame from '@/features/PlayGame';
 import Room from '@/features/Room';
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
