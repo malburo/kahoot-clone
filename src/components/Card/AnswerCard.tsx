@@ -42,18 +42,16 @@ const Answer = styled.a<Props>`
     `}
 `;
 
-function AnswerCard(props: Props) {
-  const { type, children, correct } = props;
+function AnswerCard({ type, children, correct }: Props) {
   return (
     <Answer type={type} correct={correct}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         {children}
-        {correct && (
-          <Image
-            src={correct ? CorrectIcon : WrongIcon}
-            height={50}
-            width={40}
-          />
+        {correct !== undefined && correct && (
+          <Image src={CorrectIcon} height={50} width={40} />
+        )}
+        {correct !== undefined && !correct && (
+          <Image src={WrongIcon} height={50} width={40} />
         )}
       </Box>
     </Answer>

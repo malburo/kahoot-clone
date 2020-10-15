@@ -1,6 +1,7 @@
 import AnswerCard from '@/components/Card/AnswerCard';
 import Box from '@/components/Common/Box';
 import Text from '@/components/Common/Text';
+import convertTextToIndex from '@/utils/convertTextToIndex';
 import { Button, Col, Layout, Row } from 'antd';
 import React, { useState } from 'react';
 import { Bar, BarChart, LabelList } from 'recharts';
@@ -28,32 +29,29 @@ function InGame() {
       fill: 'rgb(38, 137, 12)',
     },
   ];
-  const [correctAnswer] = useState('A');
-  const renderCustomizedLabel = (props: any) => {
-    const { x, y, width, value, fill, index } = props;
-    return (
-      <g>
-        {index === correctAnswer.charCodeAt(0) - 65 && (
-          <image
-            x={x + width / 2 - 38}
-            y={y - 20}
-            href="https://img.icons8.com/color/48/000000/checkmark.png"
-            width={20}
-          />
-        )}
+  const [correctAnswer] = useState('');
+  const renderCustomizedLabel = ({ x, y, width, value, fill, index }: any) => (
+    <g>
+      {index === convertTextToIndex(correctAnswer) && (
+        <image
+          x={x + width / 2 - 38}
+          y={y - 23}
+          href="https://img.icons8.com/color/48/000000/checkmark.png"
+          width={20}
+        />
+      )}
 
-        <text
-          x={x + width / 2}
-          y={y - 10}
-          fill={fill}
-          textAnchor="middle"
-          dominantBaseline="middle"
-        >
-          {value}
-        </text>
-      </g>
-    );
-  };
+      <text
+        x={x + width / 2}
+        y={y - 10}
+        fill={fill}
+        textAnchor="middle"
+        dominantBaseline="middle"
+      >
+        {value}
+      </text>
+    </g>
+  );
   return (
     <Layout style={{ minHeight: '100%', backgroundColor: 'white' }}>
       <Row justify="center" align="middle" style={{ height: '15vh' }}>
