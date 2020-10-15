@@ -1,10 +1,57 @@
 import AnswerCard from '@/components/Card/AnswerCard';
 import Box from '@/components/Common/Box';
 import Text from '@/components/Common/Text';
-import { Button, Col, Image, Layout, Row } from 'antd';
-import React from 'react';
+import convertTextToIndex from '@/utils/convertTextToIndex';
+import { Button, Col, Layout, Row } from 'antd';
+import React, { useState } from 'react';
+import { Bar, BarChart, LabelList } from 'recharts';
 
 function InGame() {
+  const data = [
+    {
+      name: 'Answer A',
+      amount: 20,
+      fill: 'rgb(226, 27, 60)',
+    },
+    {
+      name: 'Answer B',
+      amount: 17,
+      fill: 'rgb(19, 104, 206)',
+    },
+    {
+      name: 'Answer C',
+      amount: 14,
+      fill: 'rgb(216, 158, 0)',
+    },
+    {
+      name: 'Answer D',
+      amount: 25,
+      fill: 'rgb(38, 137, 12)',
+    },
+  ];
+  const [correctAnswer] = useState('');
+  const renderCustomizedLabel = ({ x, y, width, value, fill, index }: any) => (
+    <g>
+      {index === convertTextToIndex(correctAnswer) && (
+        <image
+          x={x + width / 2 - 38}
+          y={y - 23}
+          href="https://img.icons8.com/color/48/000000/checkmark.png"
+          width={20}
+        />
+      )}
+
+      <text
+        x={x + width / 2}
+        y={y - 10}
+        fill={fill}
+        textAnchor="middle"
+        dominantBaseline="middle"
+      >
+        {value}
+      </text>
+    </g>
+  );
   return (
     <Layout style={{ minHeight: '100%', backgroundColor: 'white' }}>
       <Row justify="center" align="middle" style={{ height: '15vh' }}>
@@ -39,9 +86,23 @@ function InGame() {
             </Box>
           </Col>
           <Col>
-            <Box overflow="hidden" height={300} width={300}>
+            {/* <Box overflow="hidden" height={300} width={300}>
               <Image src="https://res.cloudinary.com/malburo/image/upload/v1599241128/Instagram/Posts/co0gmrfsmpehjyfuecwp.jpg" />
-            </Box>
+            </Box> */}
+            <BarChart
+              width={500}
+              height={300}
+              data={data}
+              style={{ fontSize: 30, fontWeight: 'bold' }}
+            >
+              <Bar dataKey="amount">
+                <LabelList
+                  dataKey="amount"
+                  position="top"
+                  content={renderCustomizedLabel}
+                />
+              </Bar>
+            </BarChart>
           </Col>
           <Col>
             <Box
@@ -65,16 +126,36 @@ function InGame() {
           style={{ margin: '50px 0 20px 0' }}
         >
           <Col span={12}>
-            <AnswerCard type="A">answer...</AnswerCard>
+            <AnswerCard
+              type="A"
+              correct={correctAnswer ? correctAnswer === 'A' : undefined}
+            >
+              answer...
+            </AnswerCard>
           </Col>
           <Col span={12}>
-            <AnswerCard type="B">answer...</AnswerCard>
+            <AnswerCard
+              type="B"
+              correct={correctAnswer ? correctAnswer === 'B' : undefined}
+            >
+              answer...
+            </AnswerCard>
           </Col>
           <Col span={12}>
-            <AnswerCard type="C">answer...</AnswerCard>
+            <AnswerCard
+              type="C"
+              correct={correctAnswer ? correctAnswer === 'C' : undefined}
+            >
+              answer...
+            </AnswerCard>
           </Col>
           <Col span={12}>
-            <AnswerCard type="D">answer...</AnswerCard>
+            <AnswerCard
+              type="D"
+              correct={correctAnswer ? correctAnswer === 'D' : undefined}
+            >
+              answer...
+            </AnswerCard>
           </Col>
         </Row>
       </Box>

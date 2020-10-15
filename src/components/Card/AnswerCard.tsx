@@ -1,10 +1,18 @@
-import styled from 'styled-components';
+/* eslint-disable react/require-default-props */
+import CorrectIcon from '@/assets/images/correct.svg';
+import WrongIcon from '@/assets/images/wrong.svg';
+import { Image } from 'antd';
+import React from 'react';
+import styled, { css } from 'styled-components';
+import Box from '../Common/Box';
 
 interface Props {
   type: string;
+  children: any;
+  correct?: boolean;
 }
 
-const AnswerCard = styled.a<Props>`
+const Answer = styled.a<Props>`
   display: inline-block;
   border-radius: 5px;
   padding: 30px;
@@ -26,6 +34,28 @@ const AnswerCard = styled.a<Props>`
       (props.type === 'C' && 'rgb(199, 146, 0)') ||
       (props.type === 'D' && 'rgb(35, 126, 11)')};
   }
+  ${props =>
+    !props.correct &&
+    props.correct !== undefined &&
+    css`
+      opacity: 0.3;
+    `}
 `;
+
+function AnswerCard({ type, children, correct }: Props) {
+  return (
+    <Answer type={type} correct={correct}>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        {children}
+        {correct !== undefined && correct && (
+          <Image src={CorrectIcon} height={50} width={40} />
+        )}
+        {correct !== undefined && !correct && (
+          <Image src={WrongIcon} height={50} width={40} />
+        )}
+      </Box>
+    </Answer>
+  );
+}
 
 export default AnswerCard;
