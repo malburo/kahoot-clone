@@ -1,16 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import { AppDispatch } from '@/app/store';
 import { KahootFormValues } from '@/components/Form/KahootForm';
-import { createKahoot } from '@/features/Kahoot/slice/kahoots';
+import kahootsSlice from '@/features/Kahoot/slice/kahoots';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Modal } from 'antd';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import KahootForm from '../Form/KahootForm';
 
-function NewKahootModal(props: any) {
-  const { children } = props;
+const NewKahootModal: FC = ({ children }) => {
   const [visible, setVisible] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
@@ -18,11 +17,16 @@ function NewKahootModal(props: any) {
     setVisible(true);
   };
 
-  const handleSubmit = async (values: KahootFormValues) => {
+  const handleSubmit = (values: KahootFormValues) => {
     setVisible(false);
-    const kahootResponse = await dispatch(createKahoot(values));
-    const kahoot = unwrapResult(kahootResponse);
-    history.push(`/kahoots/${kahoot._id}`);
+    try {
+      const kahoot: any = dispatch(kahootsSlice.createNew(values)).then(
+        unwrapResult,
+      );
+      history.push(`/kahoots/${kahoot.data._id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -40,6 +44,6 @@ function NewKahootModal(props: any) {
       </Modal>
     </>
   );
-}
+};
 
 export default NewKahootModal;
