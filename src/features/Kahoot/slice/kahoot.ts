@@ -2,6 +2,7 @@
 import kahootApi, { kahootType } from '@/api/kahootApi';
 import questionApi, { QuestionType } from '@/api/questionApi';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { ErrorNotification, SuccessNotification } from '@/utils/notification';
 
 export const getKahoot = createAsyncThunk(
   'kahoot/get',
@@ -21,6 +22,7 @@ export const createQuestion = createAsyncThunk(
       const newQuestion = await questionApi.createQuestion(payload);
       return newQuestion.data;
     } catch (error) {
+      ErrorNotification(error);
       return thunkAPI.rejectWithValue(error.data);
     }
   },
@@ -30,8 +32,10 @@ export const updateQuestion = createAsyncThunk(
   async (payload: any, thunkAPI) => {
     try {
       const newQuestion = await questionApi.updateQuestion(payload);
+      SuccessNotification(newQuestion);
       return newQuestion.data;
     } catch (error) {
+      ErrorNotification(error);
       return thunkAPI.rejectWithValue(error.data);
     }
   },
@@ -41,8 +45,10 @@ export const deleteQuestion = createAsyncThunk(
   async (payload: any, thunkAPI) => {
     try {
       const newQuestion = await questionApi.deleteQuestion(payload);
+      SuccessNotification(newQuestion);
       return newQuestion.data;
     } catch (error) {
+      ErrorNotification(error);
       return thunkAPI.rejectWithValue(error.data);
     }
   },

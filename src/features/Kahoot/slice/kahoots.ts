@@ -1,15 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 import kahootApi, { kahootType } from '@/api/kahootApi';
 import { KahootFormValues } from '@/components/Form/KahootForm';
+import { ErrorNotification, SuccessNotification } from '@/utils/notification';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { notification } from 'antd';
 
 export const getKahoots = createAsyncThunk(
   'kahoots/getAll',
   async (payload, thunkAPI) => {
     try {
       const kahootList = await kahootApi.getAll();
-
       return kahootList.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.data);
@@ -21,14 +20,10 @@ export const createKahoot = createAsyncThunk(
   async (payload: KahootFormValues, thunkAPI) => {
     try {
       const newKahoot = await kahootApi.createKahoot(payload);
-      notification.success({
-        message: newKahoot.message,
-      });
+      SuccessNotification(newKahoot);
       return newKahoot.data;
     } catch (error) {
-      notification.error({
-        message: error.data.message,
-      });
+      ErrorNotification(error);
       return thunkAPI.rejectWithValue(error.data);
     }
   },
@@ -38,14 +33,10 @@ export const deleteKahoot = createAsyncThunk(
   async (payload: string, thunkAPI) => {
     try {
       const newKahoot = await kahootApi.deleteKahoot(payload);
-      notification.success({
-        message: newKahoot.message,
-      });
+      SuccessNotification(newKahoot);
       return newKahoot.data;
     } catch (error) {
-      notification.error({
-        message: error.data.message,
-      });
+      ErrorNotification(error);
       return thunkAPI.rejectWithValue(error.data);
     }
   },

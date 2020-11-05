@@ -48,7 +48,15 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
       <Row justify="space-between" align="middle">
         <Col span={18}>
           <Box>
-            <Form.Item name="content">
+            <Form.Item
+              name="content"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your question',
+                },
+              ]}
+            >
               <Input size="large" placeholder="Question?" />
             </Form.Item>
           </Box>
@@ -77,12 +85,29 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
           </Box>
         </Col>
       </Row>
-      <Form.Item name="correctAnswer">
+      <Form.Item
+        name="correctAnswer"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your answers',
+          },
+        ]}
+      >
         <Radio.Group style={{ display: 'block' }}>
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answers', 'A']} style={{ margin: 0 }}>
+                <Form.Item
+                  name={['answers', 'A']}
+                  style={{ margin: 0 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your answers',
+                    },
+                  ]}
+                >
                   <TextArea placeholder="Answer A" autoSize bordered={false} />
                 </Form.Item>
               </Col>
@@ -94,7 +119,16 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answers', 'B']} style={{ margin: 0 }}>
+                <Form.Item
+                  name={['answers', 'B']}
+                  style={{ margin: 0 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your answers',
+                    },
+                  ]}
+                >
                   <TextArea placeholder="Answer B" autoSize bordered={false} />
                 </Form.Item>
               </Col>
@@ -106,7 +140,16 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answers', 'C']} style={{ margin: 0 }}>
+                <Form.Item
+                  name={['answers', 'C']}
+                  style={{ margin: 0 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your answers',
+                    },
+                  ]}
+                >
                   <TextArea placeholder="Answer C" autoSize bordered={false} />
                 </Form.Item>
               </Col>
@@ -118,7 +161,16 @@ const QuizForm = ({ initialValues, onSave }: Props) => {
           <Box bg="white" p={20} mt={20}>
             <Row justify="space-between" align="middle">
               <Col span={21}>
-                <Form.Item name={['answers', 'D']} style={{ margin: 0 }}>
+                <Form.Item
+                  name={['answers', 'D']}
+                  style={{ margin: 0 }}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your answers',
+                    },
+                  ]}
+                >
                   <TextArea placeholder="Answer D" autoSize bordered={false} />
                 </Form.Item>
               </Col>
