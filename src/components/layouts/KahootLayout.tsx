@@ -5,7 +5,7 @@ import {
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Avatar, Button, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
+import { Avatar, Col, Dropdown, Image, Layout, Menu, Row } from 'antd';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import logo from '../../assets/images/logo-white.png';

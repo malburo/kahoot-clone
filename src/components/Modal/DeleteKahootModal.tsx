@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { AppDispatch } from '@/app/store';
 import kahootsSlice from '@/features/Kahoot/slice/kahoots';
-import { SuccessNotification } from '@/utils/notification';
 import { Modal } from 'antd';
 import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
