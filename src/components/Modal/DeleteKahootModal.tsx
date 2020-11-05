@@ -1,18 +1,22 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { AppDispatch } from '@/app/store';
-import { deleteKahoot } from '@/features/Kahoot/slice/kahoots';
+import kahootsSlice from '@/features/Kahoot/slice/kahoots';
+import { SuccessNotification } from '@/utils/notification';
 import { Modal } from 'antd';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-function DeleteKahootModal(props: any) {
-  const { children, kahootId } = props;
+interface Props {
+  children: React.ReactChild;
+  kahootId: string;
+}
+const DeleteKahootModal: FC<Props> = ({ children, kahootId }) => {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDelete = (kahootId: string) => {
-    dispatch(deleteKahoot(kahootId));
+    dispatch(kahootsSlice.deleteById(kahootId));
     setVisible(false);
   };
 
@@ -32,6 +36,6 @@ function DeleteKahootModal(props: any) {
       </Modal>
     </>
   );
-}
+};
 
 export default DeleteKahootModal;

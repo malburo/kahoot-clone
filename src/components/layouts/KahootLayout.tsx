@@ -22,9 +22,6 @@ function KahootLayout({ children }: KahootLayoutProps) {
     store.dispatch(logout());
     history.replace('/auth/login');
   };
-  const handleDone = () => {
-    history.replace('/kahoots');
-  };
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header style={{ backgroundColor: '#4c3e8e', height: '8vh' }}>
@@ -40,9 +37,6 @@ function KahootLayout({ children }: KahootLayoutProps) {
                 marginRight: '28px',
               }}
             />
-          </Col>
-          <Col span={2}>
-            <Button onClick={handleDone}>Done</Button>
           </Col>
           <Col>
             <Row align="middle">
