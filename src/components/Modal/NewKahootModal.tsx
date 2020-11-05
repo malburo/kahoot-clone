@@ -2,6 +2,7 @@
 import { AppDispatch } from '@/app/store';
 import { KahootFormValues } from '@/components/Form/KahootForm';
 import kahootsSlice from '@/features/Kahoot/slice/kahoots';
+import { SuccessNotification } from '@/utils/notification';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Button, Modal } from 'antd';
 import React, { FC, useState } from 'react';
@@ -23,6 +24,7 @@ const NewKahootModal: FC = ({ children }) => {
       const kahoot: any = dispatch(kahootsSlice.createNew(values)).then(
         unwrapResult,
       );
+      SuccessNotification({ message: 'Kahoot added' });
       history.push(`/kahoots/${kahoot.data._id}`);
     } catch (error) {
       console.log(error);

@@ -17,11 +17,11 @@ interface Props {
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 10 },
+    sm: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 14 },
+    sm: { span: 16 },
   },
 };
 const tailFormItemLayout = {
@@ -63,7 +63,7 @@ function RegisterForm({ onFinish }: Props) {
           },
         ]}
       >
-        <Input />
+        <Input style={{ width: '300px' }} />
       </Form.Item>
 
       <Form.Item
@@ -77,14 +77,14 @@ function RegisterForm({ onFinish }: Props) {
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password style={{ width: '300px' }} />
       </Form.Item>
 
       <Form.Item
         name="confirmPassword"
         label="Confirm Password"
-        dependencies={['password']}
         hasFeedback
+        dependencies={['password']}
         rules={[
           {
             required: true,
@@ -96,15 +96,13 @@ function RegisterForm({ onFinish }: Props) {
                 if (!value || getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(
-                  'The two passwords that you entered do not match!',
-                );
+                return Promise.reject('Passwords not match!');
               },
             };
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password style={{ width: '300px' }} />
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
